@@ -1,0 +1,8 @@
+.city-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 20px; }
+
+@media (max-width: 1024px) {
+  .city-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .city-grid { grid-auto-rows: 160px; gap: 12px; }
+}

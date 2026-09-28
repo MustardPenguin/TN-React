@@ -1,0 +1,21 @@
+footer { background: #0f1520; color: #aab3c2; padding: 64px 0 28px; font-size: 14px; }
+footer .logo { margin-bottom: 12px; }
+footer h5 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+footer ul { list-style: none; display: grid; gap: 10px; }
+footer a:hover { color: #fff; }
+
+.f-grid { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: 32px; }
+.f-tagline { max-width: 280px; }
+.f-bottom { border-top: 1px solid #253041; margin-top: 48px; padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+.socials { display: flex; gap: 12px; }
+.socials a { width: 36px; height: 36px; border-radius: 50%; background: #1b2433; display: grid; place-items: center; }
+.socials svg { width: 16px; height: 16px; fill: currentColor; }
+
+@media (max-width: 1024px) {
+  .f-grid { grid-template-columns: repeat(3, 1fr); }
+  .f-grid > div:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .f-grid { grid-template-columns: repeat(2, 1fr); }
+}

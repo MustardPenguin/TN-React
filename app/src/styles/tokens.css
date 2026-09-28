@@ -1,0 +1,15 @@
+:root {
+  --brand: #0e7c7b;
+  --brand-dark: #0a5f5e;
+  --brand-light: #e6f4f3;
+  --accent: #f59e0b;
+  --text: #1a1f2b;
+  --muted: #5b6475;
+  --border: #e4e7ec;
+  --bg: #ffffff;
+  --bg-soft: #f6f8fa;
+  --radius: 14px;
+  --shadow: 0 1px 3px rgba(16,24,40,.08), 0 4px 14px rgba(16,24,40,.06);
+  --shadow-hover: 0 8px 28px rgba(16,24,40,.14);
+  --max: 1200px;
+}

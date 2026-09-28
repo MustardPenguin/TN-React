@@ -1,0 +1,6 @@
+.testimonials { background: var(--bg-soft); }
+.t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+@media (max-width: 760px) {
+  .t-grid { grid-template-columns: 1fr; }
+}

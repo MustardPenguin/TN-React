@@ -1,0 +1,15 @@
+.listings { background: var(--bg-soft); }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.chip { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: #fff; font-size: 14px; font-weight: 500; }
+.chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+/* overflow-x: auto also clips vertically, so pad the scroll area to leave room
+   for the card hover lift + shadow, and cancel it with negative margins so the
+   cards stay aligned with the container. */
+.carousel { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 72px) / 4); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 12px; margin: -12px; padding: 12px 12px 24px; scrollbar-width: thin; }
+
+@media (max-width: 1024px) {
+  .carousel { grid-auto-columns: calc((100% - 24px) / 2.3); }
+}
+@media (max-width: 760px) {
+  .carousel { grid-auto-columns: 82%; }
+}

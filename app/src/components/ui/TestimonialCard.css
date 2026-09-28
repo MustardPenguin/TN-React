@@ -1,0 +1,8 @@
+.t-card { background: #fff; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+.t-card p { font-size: 16px; margin-bottom: 20px; }
+.stars { color: var(--accent); letter-spacing: 2px; margin-bottom: 14px; }
+
+.person { display: flex; align-items: center; gap: 12px; }
+.person b { display: block; font-size: 15px; }
+.person span { font-size: 13px; color: var(--muted); }
+.avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; }

@@ -1,0 +1,12 @@
+.city { position: relative; border-radius: var(--radius); overflow: hidden; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 20px; color: #fff; transition: .3s; }
+.city::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,.7)); }
+.city:hover { transform: scale(1.02); }
+.city div { position: relative; }
+.city h3 { font-size: 22px; font-weight: 700; }
+.city span { font-size: 14px; opacity: .9; }
+.city.big { grid-column: span 2; grid-row: span 2; }
+.city.big h3 { font-size: 30px; }
+
+@media (max-width: 760px) {
+  .city.big { grid-row: span 1; }
+}

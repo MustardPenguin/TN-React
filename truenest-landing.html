@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TrueNest — Find your next home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --brand: #0e7c7b;
+    --brand-dark: #0a5f5e;
+    --brand-light: #e6f4f3;
+    --accent: #f59e0b;
+    --text: #1a1f2b;
+    --muted: #5b6475;
+    --border: #e4e7ec;
+    --bg: #ffffff;
+    --bg-soft: #f6f8fa;
+    --radius: 14px;
+    --shadow: 0 1px 3px rgba(16,24,40,.08), 0 4px 14px rgba(16,24,40,.06);
+    --shadow-hover: 0 8px 28px rgba(16,24,40,.14);
+    --max: 1200px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Inter", system-ui, -apple-system, sans-serif; color: var(--text); background: var(--bg); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); margin-bottom: 8px; }
+  h2 { font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .sub { color: var(--muted); margin-top: 8px; font-size: 17px; }
+  .link-arrow { color: var(--brand); font-weight: 600; white-space: nowrap; }
+  .link-arrow:hover { text-decoration: underline; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 15px; border: 1px solid transparent; cursor: pointer; transition: .2s; }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--brand-dark); }
+  .btn-ghost { border-color: var(--border); background: #fff; }
+  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 22px; letter-spacing: -.02em; color: var(--brand); }
+  .logo svg { width: 30px; height: 30px; }
+  .nav-links { display: flex; gap: 28px; font-weight: 500; font-size: 15px; }
+  .nav-links a:hover { color: var(--brand); }
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .nav-actions .signin { font-weight: 600; font-size: 15px; padding: 10px 12px; }
+  .menu-btn { display: none; background: none; border: 0; }
+
+  /* Hero */
+  .hero { position: relative; min-height: 560px; display: flex; align-items: center; padding: 96px 0;
+    background:
+      linear-gradient(180deg, rgba(10,25,35,.45) 0%, rgba(10,25,35,.65) 100%),
+      url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80") center/cover,
+      linear-gradient(135deg, #0e7c7b, #1d3b53); }
+  .hero-inner { text-align: center; color: #fff; width: 100%; }
+  .hero h1 { font-size: clamp(36px, 5.5vw, 60px); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+  .hero p { font-size: clamp(16px, 2vw, 20px); opacity: .92; margin: 16px auto 36px; max-width: 620px; }
+  .search-card { max-width: 720px; margin: 0 auto; }
+  .tabs { display: inline-flex; gap: 4px; margin-bottom: 12px; background: rgba(255,255,255,.18); padding: 4px; border-radius: 12px; backdrop-filter: blur(6px); }
+  .tab { padding: 8px 20px; border-radius: 9px; font-weight: 600; font-size: 15px; color: #fff; }
+  .tab.active { background: #fff; color: var(--text); }
+  .search { display: flex; align-items: center; background: #fff; border-radius: 14px; padding: 8px 8px 8px 20px; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
+  .search svg { width: 22px; height: 22px; color: var(--muted); flex-shrink: 0; }
+  .search input { flex: 1; border: 0; outline: 0; font: inherit; font-size: 17px; padding: 14px 12px; color: var(--text); min-width: 0; }
+  .hero-tags { margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; font-size: 14px; }
+  .hero-tags span { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); padding: 6px 14px; border-radius: 999px; }
+
+  /* Paths */
+  .paths { padding-top: 72px; }
+  .path-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .path-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; background: #fff; transition: .25s; display: flex; flex-direction: column; }
+  .path-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); border-color: transparent; }
+  .icon-wrap { width: 56px; height: 56px; border-radius: 14px; background: var(--brand-light); color: var(--brand); display: grid; place-items: center; margin-bottom: 20px; }
+  .icon-wrap svg { width: 28px; height: 28px; }
+  .path-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
+  .path-card p { color: var(--muted); margin-bottom: 22px; flex: 1; }
+
+  /* Listings */
+  .listings { background: var(--bg-soft); }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .chip { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: #fff; font-size: 14px; font-weight: 500; }
+  .chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .carousel { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 72px) / 4); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; }
+  .card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); scroll-snap-align: start; transition: .25s; }
+  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .card-img { position: relative; aspect-ratio: 4/3; background-size: cover; background-position: center; }
+  .badge { position: absolute; top: 12px; left: 12px; background: #fff; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+  .badge.new { background: var(--brand); color: #fff; }
+  .badge.cut { background: var(--accent); color: #1a1f2b; }
+  .badge.rent { background: #1d3b53; color: #fff; }
+  .fav { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; }
+  .fav svg { width: 18px; height: 18px; }
+  .card-body { padding: 16px 18px 20px; }
+  .price { font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
+  .price small { font-size: 14px; font-weight: 500; color: var(--muted); }
+  .facts { display: flex; gap: 14px; font-size: 14px; margin: 4px 0 6px; }
+  .facts b { font-weight: 700; }
+  .addr { font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .listed-by { font-size: 12px; color: var(--muted); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* List your property */
+  .owners-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .steps { margin: 28px 0 32px; display: grid; gap: 20px; }
+  .step { display: flex; gap: 16px; }
+  .step-num { width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 700; display: grid; place-items: center; }
+  .step h4 { font-size: 17px; font-weight: 700; }
+  .step p { color: var(--muted); font-size: 15px; }
+  .mock { background: linear-gradient(135deg, var(--brand-light), #fff); border-radius: 22px; padding: 32px; position: relative; }
+  .mock-window { background: #fff; border-radius: 14px; box-shadow: var(--shadow-hover); overflow: hidden; }
+  .mock-bar { display: flex; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: #e4e7ec; }
+  .mock-body { padding: 22px; display: grid; gap: 14px; }
+  .mock-title { font-weight: 700; font-size: 16px; }
+  .field { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--muted); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .upload { border: 2px dashed #b9d9d8; border-radius: 10px; padding: 22px; text-align: center; font-size: 13px; color: var(--brand); background: #f7fbfb; font-weight: 500; }
+  .mock-stat { position: absolute; bottom: -18px; left: -18px; background: #fff; border-radius: 12px; padding: 14px 18px; box-shadow: var(--shadow-hover); display: flex; gap: 12px; align-items: center; }
+  .mock-stat .dot { width: 40px; height: 40px; border-radius: 10px; background: #fef3c7; display: grid; place-items: center; font-size: 20px; }
+  .mock-stat b { display: block; font-size: 18px; }
+  .mock-stat span { font-size: 12px; color: var(--muted); }
+
+  /* Stats */
+  .stats { background: var(--text); color: #fff; padding: 56px 0; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+  .stat b { display: block; font-size: clamp(30px, 4vw, 42px); font-weight: 800; letter-spacing: -.02em; }
+  .stat span { color: #aab3c2; font-size: 15px; }
+
+  /* Cities */
+  .city-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 20px; }
+  .city { position: relative; border-radius: var(--radius); overflow: hidden; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 20px; color: #fff; transition: .3s; }
+  .city::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,.7)); }
+  .city:hover { transform: scale(1.02); }
+  .city div { position: relative; }
+  .city h3 { font-size: 22px; font-weight: 700; }
+  .city span { font-size: 14px; opacity: .9; }
+  .city.big { grid-column: span 2; grid-row: span 2; }
+  .city.big h3 { font-size: 30px; }
+
+  /* Testimonials */
+  .testimonials { background: var(--bg-soft); }
+  .t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .t-card { background: #fff; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+  .stars { color: var(--accent); letter-spacing: 2px; margin-bottom: 14px; }
+  .t-card p { font-size: 16px; margin-bottom: 20px; }
+  .person { display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; }
+  .person b { display: block; font-size: 15px; }
+  .person span { font-size: 13px; color: var(--muted); }
+
+  /* CTA */
+  .cta { padding: 0 0 80px; background: var(--bg-soft); }
+  .cta-box { background: linear-gradient(120deg, var(--brand) 0%, #1d3b53 100%); border-radius: 22px; padding: 56px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .cta-box h2 { color: #fff; }
+  .cta-box p { opacity: .88; margin-top: 8px; font-size: 17px; }
+  .cta-box .btn { background: #fff; color: var(--brand-dark); padding: 14px 28px; font-size: 16px; }
+  .cta-box .btn:hover { background: #f0fdfa; }
+
+  /* Footer */
+  footer { background: #0f1520; color: #aab3c2; padding: 64px 0 28px; font-size: 14px; }
+  .f-grid { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: 32px; }
+  footer .logo { color: #fff; margin-bottom: 12px; }
+  footer h5 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+  footer ul { list-style: none; display: grid; gap: 10px; }
+  footer a:hover { color: #fff; }
+  .f-bottom { border-top: 1px solid #253041; margin-top: 48px; padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .socials { display: flex; gap: 12px; }
+  .socials a { width: 36px; height: 36px; border-radius: 50%; background: #1b2433; display: grid; place-items: center; }
+  .socials svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .nav-links { display: none; }
+    .menu-btn { display: block; }
+    .carousel { grid-auto-columns: calc((100% - 24px) / 2.3); }
+    .city-grid { grid-template-columns: repeat(2, 1fr); }
+    .f-grid { grid-template-columns: repeat(3, 1fr); }
+    .f-grid > div:first-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 760px) {
+    section { padding: 56px 0; }
+    .container { padding: 0 16px; }
+    .nav-actions .btn { display: none; }
+    .hero { min-height: 480px; padding: 64px 0; }
+    .search { padding-left: 14px; }
+    .search .btn span { display: none; }
+    .path-grid, .t-grid, .owners-grid { grid-template-columns: 1fr; }
+    .owners-grid { gap: 40px; }
+    .carousel { grid-auto-columns: 82%; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
+    .city-grid { grid-auto-rows: 160px; gap: 12px; }
+    .city.big { grid-row: span 1; }
+    .cta-box { padding: 36px 24px; }
+    .f-grid { grid-template-columns: repeat(2, 1fr); }
+    .field-row { grid-template-columns: 1fr; }
+    .mock { padding: 20px; }
+    .mock-stat { left: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M16 3 3 14h4v14h18V14h4L16 3Z" fill="currentColor"/><path d="M12 28v-8h8v8" fill="#fff"/></svg>
+      TrueNest
+    </a>
+    <nav class="nav-links">
+      <a href="#">Buy</a>
+      <a href="#">Rent</a>
+      <a href="#">Saved Homes</a>
+      <a href="#">List a Property</a>
+      <a href="#">Help</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#" class="signin">Sign in</a>
+      <a href="#" class="btn btn-primary">List your property</a>
+      <button class="menu-btn" aria-label="Menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <h1>Find a place you'll<br/>love to call home.</h1>
+    <p>Browse thousands of homes for sale and rent, listed directly by property owners.</p>
+    <div class="search-card">
+      <div class="tabs">
+        <a href="#" class="tab active">Buy</a>
+        <a href="#" class="tab">Rent</a>
+      </div>
+      <form class="search" onsubmit="return false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" placeholder="Enter an address, city, neighborhood, or ZIP" />
+        <button class="btn btn-primary"><span>Search</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <div class="hero-tags">
+        <span>Chicago, IL</span><span>Austin, TX</span><span>Denver, CO</span><span>Nashville, TN</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WAYS TO USE ============ -->
+<section class="paths">
+  <div class="container">
+    <div class="path-grid">
+      <div class="path-card">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+        <h3>Buy a home</h3>
+        <p>Explore homes for sale with detailed photos, pricing history, and neighborhood info.</p>
+        <a href="#" class="link-arrow">Browse homes →</a>
+      </div>
+      <div class="path-card">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg></div>
+        <h3>Rent a home</h3>
+        <p>Find apartments, condos, and houses for rent that fit your budget and lifestyle.</p>
+        <a href="#" class="link-arrow">Find rentals →</a>
+      </div>
+      <div class="path-card">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></div>
+        <h3>List your property</h3>
+        <p>Own a home or rental? Post it on TrueNest and reach thousands of buyers and renters.</p>
+        <a href="#" class="link-arrow">Start a listing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED LISTINGS ============ -->
+<section class="listings">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Featured</div>
+        <h2>Homes you might like</h2>
+        <p class="sub">Fresh listings near Chicago, IL</p>
+      </div>
+      <a href="#" class="link-arrow">View all listings →</a>
+    </div>
+    <div class="filters">
+      <span class="chip active">All</span><span class="chip">For sale</span><span class="chip">For rent</span><span class="chip">Houses</span><span class="chip">Apartments</span><span class="chip">Condos</span>
+    </div>
+
+    <div class="carousel">
+      <!-- Card 1 -->
+      <a href="#" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#8ec5c4,#3d6f8a)">
+          <span class="badge new">New</span>
+          <span class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1f2b" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+        </div>
+        <div class="card-body">
+          <div class="price">$485,000</div>
+          <div class="facts"><span><b>4</b> bd</span><span><b>3</b> ba</span><span><b>2,340</b> sqft</span></div>
+          <div class="addr">1428 Maple Ridge Dr, Naperville, IL 60540</div>
+          <div class="listed-by">House for sale · Listed by owner</div>
+        </div>
+      </a>
+      <!-- Card 2 -->
+      <a href="#" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#c7d2fe,#475569)">
+          <span class="badge rent">For rent</span>
+          <span class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1f2b" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+        </div>
+        <div class="card-body">
+          <div class="price">$2,150<small>/mo</small></div>
+          <div class="facts"><span><b>2</b> bd</span><span><b>2</b> ba</span><span><b>1,080</b> sqft</span></div>
+          <div class="addr">900 W Randolph St #1204, Chicago, IL 60607</div>
+          <div class="listed-by">Apartment for rent · Listed by owner</div>
+        </div>
+      </a>
+      <!-- Card 3 -->
+      <a href="#" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#fde68a,#b45309)">
+          <span class="badge cut">Price cut</span>
+          <span class="fav"><svg viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+        </div>
+        <div class="card-body">
+          <div class="price">$329,900</div>
+          <div class="facts"><span><b>3</b> bd</span><span><b>2</b> ba</span><span><b>1,760</b> sqft</span></div>
+          <div class="addr">57 Birchwood Ln, Oak Park, IL 60302</div>
+          <div class="listed-by">House for sale · Listed by owner</div>
+        </div>
+      </a>
+      <!-- Card 4 -->
+      <a href="#" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#fbcfe8,#6b21a8)">
+          <span class="badge rent">For rent</span>
+          <span class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1f2b" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+        </div>
+        <div class="card-body">
+          <div class="price">$1,675<small>/mo</small></div>
+          <div class="facts"><span><b>1</b> bd</span><span><b>1</b> ba</span><span><b>720</b> sqft</span></div>
+          <div class="addr">2211 N Clark St #3B, Chicago, IL 60614</div>
+          <div class="listed-by">Condo for rent · Listed by owner</div>
+        </div>
+      </a>
+      <!-- Card 5 -->
+      <a href="#" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#a7f3d0,#065f46)">
+          <span class="badge">Open house Sat</span>
+          <span class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1f2b" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+        </div>
+        <div class="card-body">
+          <div class="price">$1,250,000</div>
+          <div class="facts"><span><b>5</b> bd</span><span><b>4</b> ba</span><span><b>3,900</b> sqft</span></div>
+          <div class="addr">8 Lakeshore Ct, Evanston, IL 60201</div>
+          <div class="listed-by">House for sale · Listed by owner</div>
+        </div>
+      </a>
+      <!-- Card 6 -->
+      <a href="#" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#bae6fd,#1e3a8a)">
+          <span class="badge new">New</span>
+          <span class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1f2b" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+        </div>
+        <div class="card-body">
+          <div class="price">$3,400<small>/mo</small></div>
+          <div class="facts"><span><b>3</b> bd</span><span><b>2.5</b> ba</span><span><b>1,950</b> sqft</span></div>
+          <div class="addr">415 Sheridan Rd, Wilmette, IL 60091</div>
+          <div class="listed-by">Townhouse for rent · Listed by owner</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIST YOUR PROPERTY ============ -->
+<section>
+  <div class="container owners-grid">
+    <div>
+      <div class="eyebrow">For property owners</div>
+      <h2>List your property in minutes</h2>
+      <p class="sub">Whether you're selling or renting, TrueNest puts your home in front of people who are actively searching.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h4>Add your details</h4><p>Enter the address, price, and key facts about your home.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h4>Upload photos</h4><p>Show off every room. Great photos get more views.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h4>Go live</h4><p>Your listing appears in search right away for buyers and renters.</p></div></div>
+      </div>
+      <a href="#" class="btn btn-primary">List your property</a>
+    </div>
+    <div class="mock">
+      <div class="mock-window">
+        <div class="mock-bar"><i></i><i></i><i></i></div>
+        <div class="mock-body">
+          <div class="mock-title">New listing</div>
+          <div class="field">📍 1428 Maple Ridge Dr, Naperville, IL</div>
+          <div class="field-row">
+            <div class="field">4 beds</div><div class="field">3 baths</div><div class="field">2,340 sqft</div>
+          </div>
+          <div class="field-row" style="grid-template-columns:1fr 1fr">
+            <div class="field">For sale</div><div class="field">$485,000</div>
+          </div>
+          <div class="upload">⬆ Drag photos here or click to upload</div>
+          <div class="btn btn-primary" style="width:100%">Publish listing</div>
+        </div>
+      </div>
+      <div class="mock-stat">
+        <div class="dot">👀</div>
+        <div><b>1,284 views</b><span>in the first week</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><b>25k+</b><span>Active listings</span></div>
+    <div class="stat"><b>120+</b><span>Cities covered</span></div>
+    <div class="stat"><b>1M+</b><span>Monthly visitors</span></div>
+    <div class="stat"><b>4.9★</b><span>Average user rating</span></div>
+  </div>
+</section>
+
+<!-- ============ CITIES ============ -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Explore</div>
+        <h2>Browse homes by city</h2>
+      </div>
+      <a href="#" class="link-arrow">All cities →</a>
+    </div>
+    <div class="city-grid">
+      <a href="#" class="city big" style="background-image:url('https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=1200&q=80'), linear-gradient(135deg,#0e7c7b,#1d3b53)"><div><h3>Chicago</h3><span>4,812 homes</span></div></a>
+      <a href="#" class="city" style="background-image:url('https://images.unsplash.com/photo-1531218150217-54595bc2b934?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#f59e0b,#7c2d12)"><div><h3>Austin</h3><span>2,370 homes</span></div></a>
+      <a href="#" class="city" style="background-image:url('https://images.unsplash.com/photo-1546156929-a4c0ac411f47?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#60a5fa,#1e3a8a)"><div><h3>Denver</h3><span>1,954 homes</span></div></a>
+      <a href="#" class="city" style="background-image:url('https://images.unsplash.com/photo-1545419913-775e3e82c7db?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#f472b6,#831843)"><div><h3>Nashville</h3><span>1,610 homes</span></div></a>
+      <a href="#" class="city" style="background-image:url('https://images.unsplash.com/photo-1502175353174-a7a70e73b362?auto=format&fit=crop&w=800&q=80'), linear-gradient(135deg,#34d399,#064e3b)"><div><h3>Seattle</h3><span>2,088 homes</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Testimonials</div>
+        <h2>What people are saying</h2>
+      </div>
+    </div>
+    <div class="t-grid">
+      <div class="t-card">
+        <div class="stars">★★★★★</div>
+        <p>"Found our first apartment in two days. The filters made it easy to stick to our budget."</p>
+        <div class="person"><div class="avatar" style="background:#0e7c7b">JD</div><div><b>Jane Doe</b><span>Renter · Placeholder</span></div></div>
+      </div>
+      <div class="t-card">
+        <div class="stars">★★★★★</div>
+        <p>"I listed my condo on a Monday and had three showings booked by Friday."</p>
+        <div class="person"><div class="avatar" style="background:#1d3b53">JS</div><div><b>John Smith</b><span>Property owner · Placeholder</span></div></div>
+      </div>
+      <div class="t-card">
+        <div class="stars">★★★★☆</div>
+        <p>"The listing photos and details were accurate, which saved us a lot of wasted tours."</p>
+        <div class="person"><div class="avatar" style="background:#b45309">AL</div><div><b>Alex Lee</b><span>Home buyer · Placeholder</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <h2>Have a property to sell or rent?</h2>
+        <p>Create a free listing and connect with buyers and renters today.</p>
+      </div>
+      <a href="#" class="btn">Get started — it's free</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <a href="#" class="logo">
+          <svg viewBox="0 0 32 32" fill="none" width="30" height="30"><path d="M16 3 3 14h4v14h18V14h4L16 3Z" fill="#0e7c7b"/><path d="M12 28v-8h8v8" fill="#0f1520"/></svg>
+          TrueNest
+        </a>
+        <p style="max-width:280px">Homes for sale and rent, listed directly by the people who own them.</p>
+      </div>
+      <div><h5>Explore</h5><ul><li><a href="#">Buy</a></li><li><a href="#">Rent</a></li><li><a href="#">Saved homes</a></li><li><a href="#">Cities</a></li></ul></div>
+      <div><h5>Owners</h5><ul><li><a href="#">List a property</a></li><li><a href="#">Manage listings</a></li><li><a href="#">Pricing</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h5>Support</h5><ul><li><a href="#">Help center</a></li><li><a href="#">Safety tips</a></li><li><a href="#">Fair housing</a></li></ul></div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 TrueNest. All rights reserved. · <a href="#">Privacy</a> · <a href="#">Terms</a></span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8Z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm5-9.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4ZM7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4 9h4v12H4V9Zm2-6a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm4 6h4v2c.6-1.1 2-2.2 4-2.2 4 0 4 2.6 4 6V21h-4v-5.4c0-1.6 0-3.4-2.2-3.4S14 14 14 15.5V21h-4V9Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

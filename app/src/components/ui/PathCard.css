@@ -1,0 +1,7 @@
+.path-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; background: #fff; transition: .25s; display: flex; flex-direction: column; }
+.path-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); border-color: transparent; }
+.path-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
+.path-card p { color: var(--muted); margin-bottom: 22px; flex: 1; }
+
+.icon-wrap { width: 56px; height: 56px; border-radius: 14px; background: var(--brand-light); color: var(--brand); display: grid; place-items: center; margin-bottom: 20px; }
+.icon-wrap svg { width: 28px; height: 28px; }

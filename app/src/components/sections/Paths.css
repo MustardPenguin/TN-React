@@ -1,0 +1,6 @@
+.paths { padding-top: 72px; }
+.path-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+@media (max-width: 760px) {
+  .path-grid { grid-template-columns: 1fr; }
+}

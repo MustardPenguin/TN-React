@@ -1,0 +1,32 @@
+.slide-controls { display: inline-flex; align-items: center; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(15,21,32,.45); border: 1px solid rgba(255,255,255,.18); backdrop-filter: blur(8px); color: #fff; }
+
+.slide-btn { width: 32px; height: 32px; border-radius: 50%; border: 0; background: transparent; color: inherit; display: grid; place-items: center; cursor: pointer; transition: background .2s; }
+.slide-btn:hover { background: rgba(255,255,255,.16); }
+.slide-btn svg { width: 16px; height: 16px; }
+.slide-btn:focus-visible, .slide-dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.slide-toggle span { display: grid; }
+.slide-controls.is-playing .when-paused,
+.slide-controls:not(.is-playing) .when-playing { display: none; }
+
+/* Dots: 24px-tall hit area, 8px visual pill drawn with ::before.
+   The active dot widens and ::after fills it as the countdown. */
+.slide-dots { display: flex; align-items: center; padding: 0 4px; }
+.slide-dot { position: relative; width: 16px; height: 24px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 999px; transition: width .3s ease; }
+.slide-dot::before,
+.slide-dot.is-active::after { content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 8px; border-radius: 999px; }
+.slide-dot::before { background: rgba(255,255,255,.45); transition: background .2s; }
+.slide-dot:hover::before { background: rgba(255,255,255,.8); }
+.slide-dot.is-active { width: 36px; }
+.slide-dot.is-active::before { background: rgba(255,255,255,.35); }
+.slide-dot.is-active::after { background: #fff; transform-origin: left; }
+.slide-controls.is-playing .slide-dot.is-active::after { animation: slide-progress var(--slide-interval, 6s) linear both; }
+@keyframes slide-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.slide-count { min-width: 44px; padding: 0 4px; text-align: center; font-size: 13px; font-variant-numeric: tabular-nums; opacity: .9; }
+.slide-count b { font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-dot { transition: none; }
+  .slide-controls.is-playing .slide-dot.is-active::after { animation: none; }
+}
