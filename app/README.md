@@ -48,14 +48,16 @@ via `@vitejs/plugin-react`.
 
 ## Deploying
 
-Static site — any static host works. Recommended: Cloudflare Pages (or AWS Amplify Hosting)
-connected to the Git repo:
+Deployed to GitHub Pages at https://mustardpenguin.github.io/TN-React/ by
+`.github/workflows/deploy.yml` (repo root): every push to `main` runs `npm ci` + `npm run build`
+in `app/` and publishes `app/dist`. It can also be run manually from the Actions tab.
 
-| Setting | Value |
-|---|---|
-| Root directory | `app` |
-| Build command | `npm run build` |
-| Output directory | `dist` |
+- `vite.config.js` sets `base: '/TN-React/'` for build/preview, because Pages serves the site
+  under the repo name. Update it if the repo is renamed; reset to `'/'` for a custom domain or
+  another host.
+- `npm run build && npm run preview` serves the production build locally at
+  http://localhost:4173/TN-React/.
+- One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
 
 Node 20 is pinned via `.nvmrc` / `engines`. The site is a private mockup shared by link, so
 `index.html` sets `noindex, nofollow` to keep it out of search engines. That hides it from
