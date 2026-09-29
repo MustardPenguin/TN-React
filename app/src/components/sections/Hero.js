@@ -20,11 +20,20 @@ function HeroSlides({ slides }) {
 // All headlines share one grid cell, so the block is always as tall as the
 // longest one and the search bar doesn't move when the copy changes.
 // Inactive ones are visibility:hidden, so only one <h1> is exposed at a time.
+// Long headlines get a smaller size so one of them doesn't make the hero tall
+// for every quote. Based on the longest line, since that's what wraps.
+function headlineSize(title) {
+  const longest = Math.max(...title.map((line) => line.length));
+  if (longest > 70) return 'headline-small';
+  if (longest > 40) return 'headline-medium';
+  return null;
+}
+
 function HeroCopy({ headlines }) {
   return html`
     <div class="hero-copy">
       ${headlines.map(({ title, sub }, i) => html`
-        <div class="${cx('hero-copy-item', i === 0 && 'is-active')}" data-hero-copy>
+        <div class="${cx('hero-copy-item', headlineSize(title), i === 0 && 'is-active')}" data-hero-copy>
           <h1>${title.map((line, j) => html`${j > 0 && html`<br/>`}${line}`)}</h1>
           <p>${sub}</p>
         </div>`)}

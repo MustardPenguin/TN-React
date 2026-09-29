@@ -38,16 +38,16 @@ export const heroHeadlines = [
     sub: "NRI-grade verification on every property. Five pullars of trust, one score, zero guesswork. So when you're ready to come home - everything is ready for you.",
   },
   {
-    title: ['Verified first.', 'Listed second.'],
-    sub: "We walk the land, check the title, file the RERA, scan the courts — so you don't have to do it from 10,000 miles away.",
+    title: ['Elite, curated platform — we are not a listing aggregator; every builder and every property on TrueNest is selectively onboarded'],
+    sub: "The platform is open to individuals, builders, and realtors to list their properties — all under the same verification standard, so every listing on TrueNest is one a buyer can trust.",
   },
   {
-    title: ["Hyderabad's finest properties.", "Verified to the last detail."],
-    sub: "From RERA filings to physical inspections — every listing on TrueNest carries a Trust Score you can rely on, no matter where in the world you are."
+    title: ["Real property.", "Real checks.", "Real trust."],
+    sub: "Every listing verified. Every document checked. Every boundary walked. TrueNest — because your home deserves certainty."
   },
   {
-    title: ['Stop worrying about fraud.', 'Start owning with confidence'],
-    sub: "Property fraud costs NRI buyers crores every year. TrueNest's 5-pillar verification system checks what agents won't — so your investment is protected before you commit."
+    title: ['Explore 104 properties,', 'all 100% verified by us.'],
+    sub: "We verify titles, check court encumbrances, confirm RERA registration, and physically inspect every property — because this isn't just an investment. It's home."
   },
   // {
   //   title: ['Your dream home in Hyderabad.', 'Verified, shortlisted, yours.'],

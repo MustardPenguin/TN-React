@@ -19,12 +19,17 @@
 .hero h1 { font-size: clamp(36px, 5.5vw, 60px); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
 .hero p { font-size: clamp(16px, 2vw, 20px); opacity: .92; margin: 16px auto 36px; max-width: 620px; }
 
-/* Headlines stack in one cell; the outgoing one fades out, then the next fades in. */
+/* Headlines stack in one cell; the outgoing one fades out, then the next fades in.
+   Top-aligned so the gap below the header is the same for every quote; spare
+   height from a longer quote falls between the subheading and the tabs. */
 .hero-copy { display: grid; }
-.hero-copy-item { grid-area: 1 / 1; align-self: end; opacity: 0; visibility: hidden; transform: translateY(8px);
+.hero-copy-item { grid-area: 1 / 1; align-self: start; opacity: 0; visibility: hidden; transform: translateY(8px);
   transition: opacity .4s ease, transform .4s ease, visibility 0s linear .4s; }
 .hero-copy-item.is-active { opacity: 1; visibility: visible; transform: none;
   transition: opacity .5s ease .4s, transform .5s ease .4s, visibility 0s linear .4s; }
+/* Size tiers set in Hero.js from the headline's longest line. */
+.hero-copy-item.headline-medium h1 { font-size: clamp(30px, 4.4vw, 48px); }
+.hero-copy-item.headline-small h1 { font-size: clamp(26px, 3.6vw, 40px); }
 
 .search-card { max-width: 720px; margin: 0 auto; }
 .tabs { display: inline-flex; gap: 4px; margin-bottom: 12px; background: rgba(255,255,255,.18); padding: 4px; border-radius: 12px; backdrop-filter: blur(6px); }
