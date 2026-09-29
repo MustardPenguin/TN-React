@@ -17,6 +17,8 @@ src/
   lib/html.js          `html` tagged template (auto-escapes), `cx`, `mount`
   lib/format.js        price / number / background helpers
   lib/slideshow.js     DOM-free slideshow state + autoplay timer (-> `useSlideshow` hook in React)
+  lib/images.js        `localImage('name.png')` -> URL for a file in assets/images
+  assets/images/       local images (hashed + base-path aware via Vite; prefer over public/)
   data/                content as plain data (swap for API calls later)
   styles/              tokens.css (CSS variables), base.css (reset + shared .btn, .container, …)
   components/
