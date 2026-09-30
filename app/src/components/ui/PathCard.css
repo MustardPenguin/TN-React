@@ -3,5 +3,6 @@
 .path-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
 .path-card p { color: var(--muted); margin-bottom: 22px; flex: 1; }
 
-.icon-wrap { width: 56px; height: 56px; border-radius: 14px; background: var(--brand-light); color: var(--brand); display: grid; place-items: center; margin-bottom: 20px; }
-.icon-wrap svg { width: 28px; height: 28px; }
+/* Spot illustration (components/ui/Illustration.js) in place of an icon. */
+.path-art { height: 160px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
+.path-art svg { height: 100%; width: auto; display: block; }

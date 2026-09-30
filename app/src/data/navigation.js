@@ -1,9 +1,14 @@
 export const mainNav = [
   { label: 'Buy', href: '#' },
   { label: 'Rent', href: '#' },
-  { label: 'Saved Homes', href: '#' },
-  { label: 'List a Property', href: '#' },
-  { label: 'Help', href: '#' },
+];
+
+// Icon-only links at the top right of the header. `label` is the accessible
+// name and hover tooltip; `icon` is a name from components/ui/Icon.js.
+export const headerIconLinks = [
+  { label: 'Help', icon: 'help', href: '#' },
+  { label: 'Saved homes', icon: 'saved', href: '#' },
+  { label: 'Sign in', icon: 'user', href: '#' },
 ];
 
 export const footerColumns = [

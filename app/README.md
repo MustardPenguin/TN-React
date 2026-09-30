@@ -17,6 +17,7 @@ src/
   lib/html.js          `html` tagged template (auto-escapes), `cx`, `mount`
   lib/format.js        price / number / background helpers
   lib/slideshow.js     DOM-free slideshow state + autoplay timer (-> `useSlideshow` hook in React)
+  lib/typewriter.js    DOM-free type/hold/delete loop (-> `useTypewriter` hook in React)
   lib/images.js        `localImage('name.png')` -> URL for a file in assets/images
   assets/images/       local images (hashed + base-path aware via Vite; prefer over public/)
   data/                content as plain data (swap for API calls later)
@@ -33,7 +34,8 @@ src/
   next to it, imported by the component. Responsive rules live in that same CSS file.
 - Content never lives in components; it's passed in as props from `data/`.
 - This is a mockup: UI is static unless a feature has been explicitly asked for.
-  Current behaviour: the hero background slideshow + rotating headlines (`initHero`).
+  Current behaviour: the hero background slideshow + rotating headlines, and search
+  suggestions typed into the search placeholder (`initHero`).
 - Behaviour is kept out of markup: a section that needs JS exports an `initX(root)`
   function (see `initHero`), which `main.js` calls after mounting. It returns a
   cleanup function (-> a `useEffect` cleanup in React).

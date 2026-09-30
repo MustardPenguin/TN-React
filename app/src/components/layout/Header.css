@@ -1,9 +1,16 @@
 header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
-.nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
-.nav-links { display: flex; gap: 28px; font-weight: 500; font-size: 15px; }
+/* Logo + main links on the left; icon links and CTA pushed to the right. */
+.nav { display: flex; align-items: center; height: 68px; gap: 24px; }
+.nav-links { display: flex; gap: 28px; margin-left: 16px; font-weight: 500; font-size: 15px; }
 .nav-links a:hover { color: var(--brand); }
-.nav-actions { display: flex; align-items: center; gap: 12px; }
-.nav-actions .signin { font-weight: 600; font-size: 15px; padding: 10px 12px; }
+.nav-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+
+/* Icon-only links (help, saved homes, sign in). */
+.icon-link { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--text); transition: background .2s, color .2s; }
+.icon-link:hover { background: var(--brand-light); color: var(--brand); }
+.icon-link:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.icon-link svg { width: 22px; height: 22px; }
+.nav-actions .icon-link + .btn { margin-left: 4px; }
 .menu-btn { display: none; background: none; border: 0; }
 
 @media (max-width: 1024px) {

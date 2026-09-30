@@ -1,9 +1,10 @@
 // Static landing-page copy.
 
+// `illustration` names an entry in components/ui/Illustration.js.
 export const paths = [
-  { icon: 'home', title: 'Buy a home', body: 'Explore homes for sale with detailed photos, pricing history, and locality info.', link: { label: 'Browse homes', href: '#' } },
-  { icon: 'building', title: 'Rent a home', body: 'Find apartments, villas, and independent houses for rent that fit your budget and lifestyle.', link: { label: 'Find rentals', href: '#' } },
-  { icon: 'plusSquare', title: 'List your property', body: 'Own a home or rental? Post it on TrueNest and reach thousands of buyers and renters.', link: { label: 'Start a listing', href: '#' } },
+  { illustration: 'buyer', title: 'Buy a home', body: 'Explore homes for sale with detailed photos, pricing history, and locality info.', link: { label: 'Browse homes', href: '#' } },
+  { illustration: 'renter', title: 'Rent a home', body: 'Find apartments, villas, and independent houses for rent that fit your budget and lifestyle.', link: { label: 'Find rentals', href: '#' } },
+  { illustration: 'owner', title: 'List your property', body: 'Own a home or rental? Post it on TrueNest and reach thousands of buyers and renters.', link: { label: 'Start a listing', href: '#' } },
 ];
 
 export const listingSteps = [

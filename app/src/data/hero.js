@@ -79,3 +79,13 @@ export const heroHeadlines = [
   // },
 
 ];
+
+// Searches typed out as the search box placeholder while it isn't focused.
+// Keep them short (about 26 characters or fewer) so they fit on phones.
+export const heroSearchSuggestions = [
+  '3 BHK in Gachibowli',
+  'Villas in Kokapet',
+  '2 BHK for rent in Kondapur',
+  'Apartments in HITEC City',
+  'Houses in Manikonda',
+];
