@@ -1,6 +1,6 @@
-import { raw } from '../../lib/html.js';
+import { Svg } from './Svg.jsx';
 
-// Static, trusted SVG markup. Sizing comes from the parent's CSS
+// Static, trusted SVG markup, rendered by <Svg>. Sizing comes from the parent's CSS
 // (e.g. `.icon-wrap svg`), so most icons carry no width/height.
 const ICONS = {
   menu: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
@@ -46,5 +46,5 @@ export const hasIcon = (name) => name in ICONS;
 export function Icon({ name }) {
   const svg = ICONS[name];
   if (!svg) throw new Error(`Unknown icon: ${name}`);
-  return raw(svg);
+  return <Svg markup={svg} />;
 }

@@ -1,6 +1,7 @@
 # TrueNest app
 
-Landing page refactored from `../truenest-landing.html` (kept as the design reference).
+React 19 + Vite landing page, originally refactored from `../truenest-landing.html` (kept as
+the design reference).
 
 ```sh
 npm install
@@ -12,43 +13,39 @@ npm run build    # -> dist/
 
 ```
 src/
-  main.js              entry: global styles, mount, behaviour init
-  App.js               page composition (data -> sections)
-  lib/html.js          `html` tagged template (auto-escapes), `cx`, `mount`
-  lib/format.js        price / number / background helpers
-  lib/slideshow.js     DOM-free slideshow state + autoplay timer (-> `useSlideshow` hook in React)
-  lib/typewriter.js    DOM-free type/hold/delete loop (-> `useTypewriter` hook in React)
+  main.jsx             entry: global styles, createRoot
+  App.jsx              page composition: the only place data comes in (src/data -> props)
+  data/                content as plain data; its shapes are the contract for future APIs
+  hooks/               useSlideshow, useTypewriter, useMediaQuery / useDocumentVisible
+  lib/slideshow.js     framework-free slideshow timer (wrapped by useSlideshow)
+  lib/typewriter.js    framework-free type/hold/delete loop (wrapped by useTypewriter)
+  lib/format.js        price / number / background-style helpers
   lib/images.js        `localImage('name.png')` -> URL for a file in assets/images
+  lib/cx.js            `cx('a', cond && 'b')` class-name joiner
   assets/images/       local images (hashed + base-path aware via Vite; prefer over public/)
-  data/                content as plain data (swap for API calls later)
   styles/              tokens.css (CSS variables), base.css (reset + shared .btn, .container, …)
   components/
-    ui/                reusable pieces: Icon, Logo, SectionHead, ListingCard, PathCard, CityCard, TestimonialCard, SlideControls
+    ui/                reusable pieces: Icon, Illustration, Svg, Logo, SectionHead, ListingCard,
+                       PathCard, CityCard, TestimonialCard, SlideControls
     layout/            Header, Footer
-    sections/          Hero, Paths, FeaturedListings, ListYourProperty, Stats, Cities, Testimonials, CtaBanner
+    sections/          Hero, Verification, Paths, FeaturedListings, ListYourProperty, Stats,
+                       Cities, Testimonials, CtaBanner
 ```
 
 ## Conventions
 
-- A component is a pure function `props -> html` in `Name.js`, with its styles in `Name.css`
-  next to it, imported by the component. Responsive rules live in that same CSS file.
-- Content never lives in components; it's passed in as props from `data/`.
+- Components are stateless where possible: data in via props, markup out, no fetching inside.
+  `App.jsx` passes everything down, so replacing `src/data/` with API calls only changes that
+  level, as long as the API returns the same shapes (e.g. a listing in `data/listings.js`).
+- Each component lives in `Name.jsx` with its styles in `Name.css` next to it, imported by the
+  component. Responsive rules live in that same CSS file. Plain CSS with global class names.
+- Local UI state (hover, open step, slideshow position) lives in the section that owns it
+  (Hero, Verification); timing logic lives in `lib/` and is used through hooks.
+- Icons and illustrations are static SVG strings rendered by `<Svg>`; never pass user content
+  to it.
 - This is a mockup: UI is static unless a feature has been explicitly asked for.
-  Current behaviour: the hero background slideshow + rotating headlines, and search
-  suggestions typed into the search placeholder (`initHero`).
-- Behaviour is kept out of markup: a section that needs JS exports an `initX(root)`
-  function (see `initHero`), which `main.js` calls after mounting. It returns a
-  cleanup function (-> a `useEffect` cleanup in React).
-- State logic that isn't tied to the DOM lives in `lib/` (e.g. `createSlideshow`), so it
-  can be reused and later wrapped as a hook.
-- Class names match the original HTML, so the CSS carried over unchanged.
-
-## Moving to React
-
-Each component maps 1:1 to a React component: rename to `.jsx`, turn the `html` template
-into JSX (`class` -> `className`, `style` strings -> objects), and replace `initX` with
-event handlers/state. Data, CSS, and tokens carry over as-is. Vite supports this directly
-via `@vitejs/plugin-react`.
+  Current behaviour: hero slideshow + rotating headlines, typed search suggestions, the
+  sliding page sheet over the pinned hero, and the expandable verification steps.
 
 ## Deploying
 
@@ -63,6 +60,7 @@ in `app/` and publishes `app/dist`. It can also be run manually from the Actions
   http://localhost:4173/TN-React/.
 - One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
 
-Node 20 is pinned via `.nvmrc` / `engines`. The site is a private mockup shared by link, so
+Node 24 is pinned via `.nvmrc` (used locally by nvm and by the deploy workflow); `engines`
+requires at least 22.12, Vite 8's minimum. The site is a private mockup shared by link, so
 `index.html` sets `noindex, nofollow` to keep it out of search engines. That hides it from
 search engines but isn't access control: anyone with the URL can open it.

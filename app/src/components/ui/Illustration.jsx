@@ -1,4 +1,4 @@
-import { raw } from '../../lib/html.js';
+import { Svg } from './Svg.jsx';
 
 // Small spot illustrations (a person with an expressive face plus a prop),
 // drawn as static, trusted SVG. Colours match the design tokens:
@@ -90,5 +90,5 @@ const ILLUSTRATIONS = {
 export function Illustration({ name }) {
   const markup = ILLUSTRATIONS[name];
   if (!markup) throw new Error(`Unknown illustration: ${name}`);
-  return raw(markup);
+  return <Svg markup={markup} />;
 }
