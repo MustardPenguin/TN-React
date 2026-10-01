@@ -1,5 +1,8 @@
-/* The gradient shows while images load (or if they fail). */
-.hero { position: relative; isolation: isolate; overflow: hidden; min-height: 560px; display: flex; align-items: center; padding: 96px 0;
+/* The gradient shows while images load (or if they fail).
+   Sticky: the hero stays put while .page-sheet slides over it. `--hero-top`
+   is set in Hero.js so a hero taller than the window scrolls until its bottom
+   is visible before it pins. */
+.hero { position: sticky; top: var(--hero-top, 68px); isolation: isolate; overflow: hidden; min-height: 560px; display: flex; align-items: center; padding: 96px 0;
   background: linear-gradient(135deg, #0e7c7b, #1d3b53); }
 
 /* Slideshow: stacked image layers under a dark overlay for text contrast. */

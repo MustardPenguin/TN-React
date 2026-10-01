@@ -22,18 +22,21 @@ export function App() {
     ${Header({ links: mainNav, iconLinks: headerIconLinks })}
     <main>
       ${Hero({ popularSearches, searchSuggestions: heroSearchSuggestions, slides: heroSlides, headlines: heroHeadlines, interval: heroSlideInterval })}
-      ${Paths({ items: paths })}
-      ${FeaturedListings({ listings: featuredListings, filters: listingFilters, location: 'Hyderabad' })}
-      ${Verification({ intro: verificationIntro, steps: verificationSteps, complete: verificationComplete })}
-      ${ListYourProperty({ steps: listingSteps })}
-      ${Stats({ items: stats })}
-      ${Cities({ cities })}
-      ${Testimonials({ items: testimonials })}
-      ${CtaBanner({
-        title: 'Have a property to sell or rent?',
-        body: 'Create a verified listing and connect with buyers and renters today.',
-        action: { label: 'Get started', href: '#' },
-      })}
+      <!-- The hero stays pinned while this sheet slides up over it. -->
+      <div class="page-sheet">
+        ${Paths({ items: paths })}
+        ${FeaturedListings({ listings: featuredListings, filters: listingFilters, location: 'Hyderabad' })}
+        ${Verification({ intro: verificationIntro, steps: verificationSteps, complete: verificationComplete })}
+        ${ListYourProperty({ steps: listingSteps })}
+        ${Stats({ items: stats })}
+        ${Cities({ cities })}
+        ${Testimonials({ items: testimonials })}
+        ${CtaBanner({
+          title: 'Have a property to sell or rent?',
+          body: 'Create a verified listing and connect with buyers and renters today.',
+          action: { label: 'Get started', href: '#' },
+        })}
+      </div>
     </main>
     ${Footer({ columns: footerColumns, legalLinks, socialLinks })}`;
 }

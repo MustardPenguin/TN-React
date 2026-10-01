@@ -1,6 +1,7 @@
 /* The five verification steps: TrueNest's main selling point. */
 .verify { background: linear-gradient(180deg, var(--brand-light) 0%, #fff 85%); }
-.verify-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 32px; align-items: start; }
+/* Columns stretch to equal height; the panel centres its content. */
+.verify-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 32px; align-items: stretch; }
 
 /* ---------- Steps (left) ---------- */
 .verify-steps { list-style: none; background: #fff; border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); padding: 8px; }
@@ -48,36 +49,63 @@
 .verify-details p { padding: 0 16px 18px 130px; font-size: 15px; color: var(--muted); }
 
 /* ---------- Progress panel (right) ---------- */
-.verify-progress { position: sticky; top: 92px; padding: 32px; border-radius: 22px; background: linear-gradient(160deg, #1d3b53 0%, #0f2a3d 100%); color: #fff; text-align: center; box-shadow: var(--shadow-hover); }
-.verify-ring { position: relative; width: 168px; height: 168px; margin: 0 auto 22px; }
-/* `>` so only the ring rotates (to start at 12 o'clock), not the check icon. */
-.verify-ring > svg { width: 100%; height: 100%; transform: rotate(-90deg); transition: filter .4s; }
-.verify-ring circle { fill: none; stroke-width: 10; }
-.verify-ring-track { stroke: rgba(255,255,255,.14); }
-.verify-ring-fill { stroke: var(--brand-bright); stroke-linecap: round; stroke-dasharray: 100; transition: stroke-dashoffset .45s ease; }
+/* Navy card with a soft teal glow behind the ring (stronger when complete). */
+.verify-progress { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 28px; border-radius: 22px; background: linear-gradient(160deg, #1d3b53 0%, #0f2a3d 100%); color: #fff; text-align: center; box-shadow: var(--shadow-hover); }
+.verify-progress::before { content: ""; position: absolute; left: 50%; top: 34%; width: 340px; height: 340px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(60,196,185,.22) 0%, rgba(60,196,185,0) 65%); opacity: .55; transition: opacity .4s; pointer-events: none; }
+.verify.is-complete .verify-progress::before { opacity: 1; }
+.verify-progress > * { position: relative; }
+
+/* Ring box: arcs in the middle, step chips around the outside. */
+.verify-ring { position: relative; width: 204px; height: 204px; flex-shrink: 0; }
+/* `>` so only the ring rotates (to start at 12 o'clock), not the icons. */
+.verify-ring > svg { position: absolute; inset: 15.7%; width: 68.6%; height: 68.6%; transform: rotate(-90deg); transition: filter .4s; }
+.verify-arc { fill: none; stroke-width: 10; stroke: rgba(255,255,255,.14); transition: stroke .3s; }
+.verify-arc.is-lit { stroke: var(--brand-bright); }
+.verify.is-complete .verify-ring > svg { filter: drop-shadow(0 0 8px rgba(60,196,185,.55)); }
+
+.verify-chip { position: absolute; width: 28px; height: 28px; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.08); color: rgba(255,255,255,.45); transition: background .3s, color .3s, box-shadow .3s; }
+.verify-chip svg { width: 15px; height: 15px; }
+.verify-chip.is-lit { background: var(--brand-bright); color: #0f2a3d; }
+.verify-chip.is-current { box-shadow: 0 0 0 4px rgba(60,196,185,.3); }
+
+/* Centre: check badge when complete, otherwise the active step's icon. */
 .verify-ring-label { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; }
-.verify-ring-label b { font-size: 40px; font-weight: 800; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
-.verify-ring-check { display: none; width: 30px; height: 30px; margin-bottom: 6px; border-radius: 50%; place-items: center; background: var(--brand-bright); color: #0f2a3d; }
+.verify-center { display: grid; margin-bottom: 4px; }
+.verify-center-icon { grid-area: 1 / 1; display: none; place-items: center; width: 30px; height: 30px; color: var(--brand-bright); }
+.verify-center-icon.is-shown { display: grid; }
+.verify-center-icon svg { width: 26px; height: 26px; }
+.verify-ring-check { border-radius: 50%; background: var(--brand-bright); color: #0f2a3d; }
 .verify-ring-check svg { width: 17px; height: 17px; }
-/* Complete (5/5): check badge + glow on the full ring. */
-.verify.is-complete .verify-ring-check { display: grid; }
-.verify.is-complete .verify-ring > svg { filter: drop-shadow(0 0 10px rgba(60,196,185,.5)); }
+.verify-ring-label b { font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
 
 .verify-kicker { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-bright); }
-.verify-progress strong { display: block; margin: 6px 0; font-size: 22px; font-weight: 800; }
+.verify-progress strong { display: block; margin: 4px 0; font-size: 22px; font-weight: 800; }
 .verify-progress p { font-size: 15px; color: #c9d4de; }
+
+/* Step labels along the bottom, lit in step with the ring. */
+.verify-pills { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.verify-pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,.06); color: #8fa1b2; font-size: 12.5px; font-weight: 600; transition: background .3s, color .3s; }
+.verify-pill svg { width: 12px; height: 12px; opacity: 0; transition: opacity .3s; }
+.verify-pill.is-lit { background: rgba(60,196,185,.16); color: #fff; }
+.verify-pill.is-lit svg { opacity: 1; color: var(--brand-bright); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .verify-grid { grid-template-columns: 1fr; gap: 20px; }
-  /* Panel first, as a compact row: ring left, text right. */
-  .verify-progress { order: -1; position: static; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 20px; padding: 20px 24px; text-align: left; }
-  .verify-ring { width: 96px; height: 96px; margin: 0; }
-  .verify-ring-label b { font-size: 24px; }
-  .verify-ring-check { width: 22px; height: 22px; margin-bottom: 3px; }
+  /* Panel first, as a compact row: ring left, text right, labels below.
+     The icon chips are dropped at this size; the labels carry the steps. */
+  .verify-progress { order: -1; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px 20px; padding: 20px 24px; text-align: left; }
+  .verify-progress::before { left: 70px; top: 70px; width: 220px; height: 220px; }
+  .verify-ring { width: 100px; height: 100px; }
+  .verify-ring > svg { inset: 0; width: 100%; height: 100%; }
+  .verify-chip { display: none; }
+  .verify-center-icon { width: 22px; height: 22px; }
+  .verify-center-icon svg { width: 18px; height: 18px; }
   .verify-ring-check svg { width: 13px; height: 13px; }
+  .verify-ring-label b { font-size: 22px; }
   .verify-progress strong { font-size: 18px; margin: 2px 0; }
   .verify-progress p { font-size: 14px; }
+  .verify-pills { grid-column: 1 / -1; justify-content: flex-start; }
 }
 @media (max-width: 760px) {
   .verify-toggle { gap: 12px; padding: 14px 12px; }
@@ -87,6 +115,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .verify-step, .verify-marker, .verify-icon, .verify-chevron, .verify-details, .verify-ring-fill, .verify-ring > svg,
+  .verify-step, .verify-marker, .verify-icon, .verify-chevron, .verify-details, .verify-ring > svg,
+  .verify-arc, .verify-chip, .verify-pill, .verify-pill svg, .verify-progress::before,
   .verify-step:not(:last-child)::before { transition: none; }
 }

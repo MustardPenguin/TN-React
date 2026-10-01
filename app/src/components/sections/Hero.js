@@ -215,6 +215,27 @@ function initSearchSuggestions(form) {
   };
 }
 
+// The hero is sticky (Hero.css). Pin it just below the header, unless header +
+// hero is taller than the window: then use a negative offset so it scrolls
+// until its bottom edge is in view, and only then stays put.
+function initStickyHero(hero, header) {
+  const update = () => {
+    const headerHeight = header?.offsetHeight ?? 0;
+    const top = Math.min(headerHeight, window.innerHeight - hero.offsetHeight);
+    hero.style.setProperty('--hero-top', `${top}px`);
+  };
+  const observer = new ResizeObserver(update); // hero height changes with copy/width
+  observer.observe(hero);
+  if (header) observer.observe(header);
+  window.addEventListener('resize', update);
+  update();
+
+  return () => {
+    observer.disconnect();
+    window.removeEventListener('resize', update);
+  };
+}
+
 /** Wire up behaviour after the markup is in the DOM. Returns a cleanup function. */
 export function initHero(root) {
   const form = root.querySelector('[data-search-form]');
@@ -224,10 +245,12 @@ export function initHero(root) {
 
   const hero = root.querySelector('[data-hero]');
   const destroySlideshow = hero ? initHeroSlideshow(hero) : () => {};
+  const destroySticky = hero ? initStickyHero(hero, root.querySelector('header')) : () => {};
 
   return () => {
     form?.removeEventListener('submit', onSubmit);
     destroySuggestions();
     destroySlideshow();
+    destroySticky();
   };
 }

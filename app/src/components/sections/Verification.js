@@ -1,12 +1,13 @@
 import { html } from '../../lib/html.js';
-import { Icon } from '../ui/Icon.js';
+import { Icon, hasIcon } from '../ui/Icon.js';
 import { SectionHead } from '../ui/SectionHead.js';
 import './Verification.css';
 
 // TrueNest's main selling point: the five verification steps.
 // Left: ordered, expandable steps joined by a timeline.
-// Right: a progress ring. It shows "n/5" for the step being hovered (or
-// keyboard-focused) and "5/5 · Fully verified" otherwise.
+// Right: a ring of five arcs (one per step, each with its icon beside it).
+// Hovering (or keyboard-focusing) a step lights arcs 1..n and shows "n/5"
+// with that step's icon; otherwise it's "5/5 · Fully verified".
 
 function Step({ step, index, total }) {
   const id = `verify-step-${index + 1}`;
@@ -30,19 +31,49 @@ function Step({ step, index, total }) {
     </li>`;
 }
 
+// Ring geometry. Arcs use pathLength=100: each step gets 100/total, minus a
+// small gap. Chips (step icons) sit outside the ring at each arc's midpoint,
+// placed in % of the ring box so it can be resized from CSS.
+const ARC_GAP = 3;
+const CHIP_RADIUS = 42.6; // % of the ring box, from its centre
+
+function arcDash(index, total) {
+  const span = 100 / total;
+  return { array: `${span - ARC_GAP} ${100 - span + ARC_GAP}`, offset: -(index * span + ARC_GAP / 2) };
+}
+
+// The centre of the ring is big enough for more detail, so it uses the
+// `<name>Detailed` icon when Icon.js has one.
+const centerIconName = (name) => (hasIcon(`${name}Detailed`) ? `${name}Detailed` : name);
+
+function chipPosition(index, total) {
+  const angle = ((index + 0.5) * 2 * Math.PI) / total; // clockwise from 12 o'clock
+  const left = 50 + CHIP_RADIUS * Math.sin(angle);
+  const top = 50 - CHIP_RADIUS * Math.cos(angle);
+  return `left:${left.toFixed(2)}%;top:${top.toFixed(2)}%`;
+}
+
 // Visual only (aria-hidden): the section heading already states that every
 // property passes all five checks, and hover changes shouldn't be announced.
-function ProgressPanel({ total, complete }) {
+function ProgressPanel({ steps, complete }) {
+  const total = steps.length;
   return html`
     <div class="verify-progress" aria-hidden="true" data-verify-progress
       data-complete-kicker="${complete.kicker}" data-complete-title="${complete.title}" data-complete-text="${complete.text}">
       <div class="verify-ring">
         <svg viewBox="0 0 120 120">
-          <circle class="verify-ring-track" cx="60" cy="60" r="52"/>
-          <circle class="verify-ring-fill" cx="60" cy="60" r="52" pathLength="100" stroke-dashoffset="0" data-verify-fill/>
+          ${steps.map((_, i) => {
+            const dash = arcDash(i, total);
+            return html`<circle class="verify-arc is-lit" cx="60" cy="60" r="52" pathLength="100" stroke-dasharray="${dash.array}" stroke-dashoffset="${dash.offset}" data-verify-arc/>`;
+          })}
         </svg>
+        ${steps.map((step, i) => html`
+          <span class="verify-chip is-lit" style="${chipPosition(i, total)}" data-verify-chip>${Icon({ name: step.icon })}</span>`)}
         <div class="verify-ring-label">
-          <span class="verify-ring-check">${Icon({ name: 'check' })}</span>
+          <span class="verify-center">
+            <span class="verify-center-icon verify-ring-check is-shown" data-verify-center="complete">${Icon({ name: 'check' })}</span>
+            ${steps.map((step, i) => html`<span class="verify-center-icon" data-verify-center="${i}">${Icon({ name: centerIconName(step.icon) })}</span>`)}
+          </span>
           <b data-verify-count>${total}/${total}</b>
         </div>
       </div>
@@ -51,6 +82,9 @@ function ProgressPanel({ total, complete }) {
         <strong data-verify-heading>${complete.title}</strong>
         <p data-verify-text>${complete.text}</p>
       </div>
+      <ul class="verify-pills">
+        ${steps.map((step) => html`<li class="verify-pill is-lit" data-verify-pill>${Icon({ name: 'check' })}${step.title}</li>`)}
+      </ul>
     </div>`;
 }
 
@@ -63,7 +97,7 @@ export function Verification({ intro, steps, complete }) {
           <ol class="verify-steps">
             ${steps.map((step, index) => Step({ step, index, total: steps.length }))}
           </ol>
-          ${ProgressPanel({ total: steps.length, complete })}
+          ${ProgressPanel({ steps, complete })}
         </div>
       </div>
     </section>`;
@@ -81,7 +115,10 @@ export function initVerification(root) {
   const steps = [...section.querySelectorAll('[data-verify-step]')];
   const toggles = steps.map((step) => step.querySelector('[data-verify-toggle]'));
   const panel = section.querySelector('[data-verify-progress]');
-  const fill = panel.querySelector('[data-verify-fill]');
+  const arcs = [...panel.querySelectorAll('[data-verify-arc]')];
+  const chips = [...panel.querySelectorAll('[data-verify-chip]')];
+  const pills = [...panel.querySelectorAll('[data-verify-pill]')];
+  const centerIcons = [...panel.querySelectorAll('[data-verify-center]')];
   const count = panel.querySelector('[data-verify-count]');
   const kicker = panel.querySelector('[data-verify-kicker]');
   const heading = panel.querySelector('[data-verify-heading]');
@@ -106,7 +143,11 @@ export function initVerification(root) {
     });
     section.classList.toggle('is-complete', complete);
 
-    fill.setAttribute('stroke-dashoffset', String(100 - (100 * reached) / total));
+    // Steps 1..reached are lit on the ring, its chips, and the pills.
+    [arcs, chips, pills].forEach((group) => group.forEach((el, i) => el.classList.toggle('is-lit', i < reached)));
+    chips.forEach((chip, i) => chip.classList.toggle('is-current', i === active));
+    const centerKey = complete ? 'complete' : String(active);
+    centerIcons.forEach((icon) => icon.classList.toggle('is-shown', icon.dataset.verifyCenter === centerKey));
     count.textContent = `${reached}/${total}`;
     if (complete) {
       kicker.textContent = panel.dataset.completeKicker;
