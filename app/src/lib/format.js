@@ -17,6 +17,7 @@ export function formatPrice(amount) {
 }
 export const formatNumber = (value) => number.format(value);
 
-/** "url(photo), gradient" background with the gradient as a load fallback. */
-export const backgroundImage = (image, fallback) =>
-  `background-image:url('${image}'), ${fallback}`;
+/** Style object: photo background with the gradient as a load fallback. */
+export const backgroundImage = (image, fallback) => ({
+  backgroundImage: `url('${image}'), ${fallback}`,
+});
