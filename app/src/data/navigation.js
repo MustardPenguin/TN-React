@@ -22,7 +22,7 @@ export const footerColumns = [
     ],
   },
   {
-    title: 'Owners',
+    title: 'Sellers',
     links: [
       { label: 'List a property', href: '#' },
       { label: 'Manage listings', href: '#' },

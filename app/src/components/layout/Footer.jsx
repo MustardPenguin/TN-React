@@ -10,7 +10,7 @@ export function Footer({ columns, legalLinks, socialLinks, year = new Date().get
         <div className="f-grid">
           <div>
             <Logo variant="dark" />
-            <p className="f-tagline">Homes for sale and rent, listed directly by the people who own them.</p>
+            <p className="f-tagline">Verified homes for sale and rent in Hyderabad, from owners and builders.</p>
           </div>
           {columns.map((col) => (
             <div key={col.title}>

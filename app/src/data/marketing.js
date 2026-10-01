@@ -4,13 +4,15 @@
 export const paths = [
   { illustration: 'buyer', title: 'Buy a home', body: 'Explore homes for sale with detailed photos, pricing history, and locality info.', link: { label: 'Browse homes', href: '#' } },
   { illustration: 'renter', title: 'Rent a home', body: 'Find apartments, villas, and independent houses for rent that fit your budget and lifestyle.', link: { label: 'Find rentals', href: '#' } },
-  { illustration: 'owner', title: 'List your property', body: 'Own a home or rental? Post it on TrueNest and reach thousands of buyers and renters.', link: { label: 'Start a listing', href: '#' } },
+  { illustration: 'owner', title: 'List your property', body: 'Selling a home or a project? Get it verified and reach serious buyers, here and abroad.', link: { label: 'Start a listing', href: '#' } },
 ];
 
+// "List your property" section. Verification is a step of its own: nothing
+// goes live until all five checks pass.
 export const listingSteps = [
-  { title: 'Add your details', body: 'Enter the address, price, and key facts about your home.' },
-  { title: 'Upload photos', body: 'Show off every room. Great photos get more views.' },
-  { title: 'Go live', body: 'Your listing appears in search right away for buyers and renters.' },
+  { title: 'Submit your property', body: 'Share the details, photos, and title documents.' },
+  { title: 'We verify it', body: 'Our team completes all five checks, from title to site visit.' },
+  { title: 'Go live, verified', body: 'Buyers here and abroad see it with its verified status.' },
 ];
 
 export const stats = [

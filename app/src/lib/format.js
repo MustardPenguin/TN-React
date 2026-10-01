@@ -17,6 +17,10 @@ export function formatPrice(amount) {
 }
 export const formatNumber = (value) => number.format(value);
 
+const compact = new Intl.NumberFormat('en-IN', { notation: 'compact', maximumFractionDigits: 1 });
+/** Counts (views, saves): full below 10,000, then compact Indian-style: 12.5K, 1.2L. */
+export const formatCount = (value) => (value < 10000 ? number.format(value) : compact.format(value));
+
 /** Style object: photo background with the gradient as a load fallback. */
 export const backgroundImage = (image, fallback) => ({
   backgroundImage: `url('${image}'), ${fallback}`,

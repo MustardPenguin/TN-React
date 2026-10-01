@@ -16,13 +16,13 @@ function ListingFormMock() {
           <div className="field-row cols-2">
             <div className="field">For sale</div><div className="field">₹1.85 Cr</div>
           </div>
-          <div className="upload">⬆ Drag photos here or click to upload</div>
-          <div className="btn btn-primary btn-block">Publish listing</div>
+          <div className="upload">⬆ Upload photos and title documents</div>
+          <div className="btn btn-primary btn-block">Submit for verification</div>
         </div>
       </div>
       <div className="mock-stat">
-        <div className="dot">👀</div>
-        <div><b>1,284 views</b><span>in the first week</span></div>
+        <div className="dot">✅</div>
+        <div><b>5/5 checks passed</b><span>Ready to go live</span></div>
       </div>
     </div>
   );
@@ -33,9 +33,9 @@ export function ListYourProperty({ steps }) {
     <section>
       <div className="container owners-grid">
         <div>
-          <div className="eyebrow">For property owners</div>
-          <h2>List your property in minutes</h2>
-          <p className="sub">Whether you're selling or renting, TrueNest puts your home in front of people who are actively searching.</p>
+          <div className="eyebrow">For sellers and builders</div>
+          <h2>List a property buyers trust</h2>
+          <p className="sub">Selling one home or a whole project? We verify every listing before it goes live, so buyers know it's real.</p>
           <div className="steps">
             {steps.map((step, i) => (
               <div key={step.title} className="step"><div className="step-num">{i + 1}</div><div><h4>{step.title}</h4><p>{step.body}</p></div></div>

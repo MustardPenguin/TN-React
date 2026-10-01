@@ -20,6 +20,16 @@
 .fav { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; }
 .fav svg { width: 18px; height: 18px; }
 
+/* Verification progress, bottom-left of the photo. z-index keeps it above
+   the hover shine. */
+.card-verified { position: absolute; left: 12px; bottom: 12px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border-radius: 999px; background: rgba(15,42,61,.82); backdrop-filter: blur(6px); color: #fff; font-size: 12px; font-weight: 700; }
+.card-verified > svg { width: 13px; height: 13px; color: var(--brand-bright); }
+.card-checks { display: flex; gap: 2px; margin-left: 2px; }
+.card-checks i { width: 7px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.25); }
+.card-checks i.is-passed { background: var(--brand-bright); }
+.card-verified.is-partial > svg { color: var(--accent); }
+.card-verified.is-partial .is-passed { background: var(--accent); }
+
 .card-body { padding: 16px 18px 20px; }
 .price { font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
 .price small { font-size: 14px; font-weight: 500; color: var(--muted); }
@@ -27,6 +37,9 @@
 .facts b { font-weight: 700; }
 .addr { font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .listed-by { font-size: 12px; color: var(--muted); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.card-stats { display: flex; gap: 14px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+.card-stats span { display: inline-flex; align-items: center; gap: 4px; }
+.card-stats svg { width: 14px; height: 14px; }
 
 @media (prefers-reduced-motion: reduce) {
   .card-img::after { display: none; }

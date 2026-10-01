@@ -34,7 +34,7 @@ export function App() {
         {/* The hero stays pinned while this sheet slides up over it. */}
         <div className="page-sheet">
           <Paths items={paths} />
-          <FeaturedListings listings={featuredListings} filters={listingFilters} location="Hyderabad" />
+          <FeaturedListings listings={featuredListings} filters={listingFilters} location="Hyderabad" checksTotal={verificationSteps.length} />
           <Verification intro={verificationIntro} steps={verificationSteps} complete={verificationComplete} />
           <ListYourProperty steps={listingSteps} />
           <Stats items={stats} />
