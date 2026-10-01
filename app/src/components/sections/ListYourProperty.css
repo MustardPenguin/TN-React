@@ -17,7 +17,10 @@
 .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
 .upload { border: 2px dashed #b9d9d8; border-radius: 10px; padding: 22px; text-align: center; font-size: 13px; color: var(--brand); background: #f7fbfb; font-weight: 500; }
 .mock-stat { position: absolute; bottom: -18px; left: -18px; background: #fff; border-radius: 12px; padding: 14px 18px; box-shadow: var(--shadow-hover); display: flex; gap: 12px; align-items: center; }
-.mock-stat .dot { width: 40px; height: 40px; border-radius: 10px; background: #fef3c7; display: grid; place-items: center; font-size: 20px; }
+.mock-stat .dot { width: 40px; height: 40px; border-radius: 10px; background: var(--brand-light); display: grid; place-items: center; }
+.mock-stat .dot svg { width: 34px; height: 34px; }
+.dot-ring { fill: none; stroke: var(--brand); stroke-width: 3.2; }
+.dot-check { fill: none; stroke: var(--brand); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .mock-stat b { display: block; font-size: 18px; }
 .mock-stat span { font-size: 12px; color: var(--muted); }
 

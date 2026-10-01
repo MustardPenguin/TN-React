@@ -1,13 +1,14 @@
-// The five verification steps: TrueNest's core promise. Order matters; every
-// property completes all five before it's listed.
+// The five verification steps: TrueNest's core promise. Order matters: steps
+// are completed in sequence, and every listing shows how many it has passed
+// (listings can be live while verification is in progress).
 // `summary` is the user's wording. `details` is placeholder copy shown when a
 // step is expanded; replace it with final text.
 // `icon` is a name from components/ui/Icon.js.
 
 export const verificationIntro = {
   eyebrow: 'The TrueNest standard',
-  title: 'Five checks. Every property. Before you see it.',
-  sub: 'No property goes live on TrueNest until it passes all five verification steps. Select a step to see what we check.',
+  title: 'Five checks. Every property. Nothing hidden.',
+  sub: 'Every listing goes through five checks and shows its progress. Select a step to see what we check.',
 };
 
 const PLACEHOLDER =
@@ -25,5 +26,5 @@ export const verificationSteps = [
 export const verificationComplete = {
   kicker: 'Complete',
   title: 'Fully verified',
-  text: 'Every listing on TrueNest has passed all five checks.',
+  text: 'A fully verified property has passed all five checks.',
 };

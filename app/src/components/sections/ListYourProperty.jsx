@@ -21,8 +21,14 @@ function ListingFormMock() {
         </div>
       </div>
       <div className="mock-stat">
-        <div className="dot">✅</div>
-        <div><b>5/5 checks passed</b><span>Ready to go live</span></div>
+        {/* Mini version of the verification ring: five arcs, all passed. */}
+        <div className="dot">
+          <svg viewBox="0 0 40 40">
+            <circle className="dot-ring" cx="20" cy="20" r="15" pathLength="100" strokeDasharray="17 3" strokeDashoffset="-1.5" transform="rotate(-90 20 20)" />
+            <path className="dot-check" d="m14.5 20.5 3.8 3.8 7.4-8" />
+          </svg>
+        </div>
+        <div><b>5/5 checks passed</b><span>Fully verified</span></div>
       </div>
     </div>
   );
@@ -35,7 +41,7 @@ export function ListYourProperty({ steps }) {
         <div>
           <div className="eyebrow">For sellers and builders</div>
           <h2>List a property buyers trust</h2>
-          <p className="sub">Selling one home or a whole project? We verify every listing before it goes live, so buyers know it's real.</p>
+          <p className="sub">Selling one home or a whole project? We verify every listing in five checks, and buyers see its progress.</p>
           <div className="steps">
             {steps.map((step, i) => (
               <div key={step.title} className="step"><div className="step-num">{i + 1}</div><div><h4>{step.title}</h4><p>{step.body}</p></div></div>

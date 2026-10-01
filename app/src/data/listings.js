@@ -4,8 +4,11 @@
 // `listedBy` is 'owner' | 'builder' (TrueNest lists for both).
 // `views` / `saves`: how many people viewed / saved it (`saved` is whether the
 // current visitor did). `checksPassed`: verification checks passed, out of the
-// steps in data/verification.js; live listings have passed them all.
-// `badge.tone` maps to a .badge modifier: 'new' | 'rent' | 'cut' | undefined.
+// steps in data/verification.js. Steps are done in order, so 3 means steps
+// 1–3 have passed; listings can be live while verification is in progress.
+// `badge` is one optional promo badge (New, Price cut, Ready to move); sale vs
+// rent is already shown on the card. `badge.tone` maps to a .badge modifier:
+// 'new' | 'cut' | undefined.
 
 const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=800&q=80`;
 
@@ -32,7 +35,6 @@ export const featuredListings = [
     views: 2310, saves: 142, checksPassed: 3,
     image: unsplash('photo-1663985139222-6af2f8646104'),
     fallback: 'linear-gradient(135deg,#c7d2fe,#475569)',
-    badge: { label: 'For rent', tone: 'rent' },
     price: 38000,
     listingType: 'rent',
     propertyType: 'Apartment',
@@ -60,7 +62,6 @@ export const featuredListings = [
     views: 642, saves: 38, checksPassed: 2,
     image: unsplash('photo-1549499090-c9203d2b20ad'),
     fallback: 'linear-gradient(135deg,#fbcfe8,#6b21a8)',
-    badge: { label: 'For rent', tone: 'rent' },
     price: 22000,
     listingType: 'rent',
     propertyType: 'Apartment',

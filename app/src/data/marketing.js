@@ -7,12 +7,12 @@ export const paths = [
   { illustration: 'owner', title: 'List your property', body: 'Selling a home or a project? Get it verified and reach serious buyers, here and abroad.', link: { label: 'Start a listing', href: '#' } },
 ];
 
-// "List your property" section. Verification is a step of its own: nothing
-// goes live until all five checks pass.
+// "List your property" section. Verification is a step of its own, and buyers
+// see each listing's verification progress.
 export const listingSteps = [
   { title: 'Submit your property', body: 'Share the details, photos, and title documents.' },
   { title: 'We verify it', body: 'Our team completes all five checks, from title to site visit.' },
-  { title: 'Go live, verified', body: 'Buyers here and abroad see it with its verified status.' },
+  { title: 'Reach serious buyers', body: 'Buyers here and abroad see its verification progress.' },
 ];
 
 export const stats = [

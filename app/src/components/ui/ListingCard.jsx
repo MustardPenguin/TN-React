@@ -3,24 +3,33 @@ import { formatPrice, formatNumber, formatCount, backgroundImage } from '../../l
 import { Icon } from './Icon.jsx';
 import './ListingCard.css';
 
-// Verification progress over the photo: "✓ 5/5 checks" plus one segment per
-// check. Amber if any check is still outstanding.
-function VerifiedPill({ passed, total }) {
+// Compact verification status, top-left of the photo: "✓ Verified" when all
+// checks have passed, otherwise "3/5" plus one dot per check. Steps are done
+// in order, so `passed` means steps 1..passed are done.
+function VerificationSeal({ passed, steps }) {
+  const total = steps.length;
+  const complete = passed >= total;
   return (
-    <span className={cx('card-verified', passed < total && 'is-partial')}>
-      <Icon name="check" />
-      {passed}/{total} checks<span className="sr-only"> passed</span>
-      <span className="card-checks" aria-hidden="true">
-        {Array.from({ length: total }, (_, i) => <i key={i} className={i < passed ? 'is-passed' : undefined} />)}
-      </span>
-    </span>
+    <div className={cx('card-seal', complete ? 'is-verified' : 'is-partial')}>
+      <Icon name={complete ? 'check' : 'shieldCheck'} />
+      <span aria-hidden="true">{complete ? 'Verified' : `${passed}/${total}`}</span>
+      {!complete && (
+        <span className="card-seal-dots" aria-hidden="true">
+          {steps.map((step, i) => <i key={step.title} className={i < passed ? 'is-passed' : undefined} />)}
+        </span>
+      )}
+      <span className="sr-only">{complete ? 'Verified' : 'Verification in progress'}: {passed} of {total} checks passed</span>
+    </div>
   );
 }
 
-// `checksTotal` is the number of verification steps (passed in, so it always
-// matches the verification section). `saved` is whether the current visitor
-// saved it; `saves` is how many people have.
-export function ListingCard({ listing, checksTotal, href = '#' }) {
+// The card is an <article> rather than one big link, so the save/share
+// buttons can be real buttons. `.card-link` (the address) stretches over the
+// whole card, so it's still clickable anywhere outside the buttons.
+// `checkSteps` are the verification steps (data/verification.js), so the
+// seal always matches the verification section. `saved` is whether the
+// current visitor saved it; `saves` is how many people have.
+export function ListingCard({ listing, checkSteps = [], href = '#' }) {
   const {
     image, fallback, badge, price, listingType, propertyType,
     beds, baths, sqft, address, saved, listedBy = 'owner',
@@ -29,16 +38,22 @@ export function ListingCard({ listing, checksTotal, href = '#' }) {
   const isRental = listingType === 'rent';
 
   return (
-    <a href={href} className="card">
+    <article className="card">
       <div className="card-img" style={backgroundImage(image, fallback)}>
+        {checksPassed != null && checkSteps.length > 0 && <VerificationSeal passed={checksPassed} steps={checkSteps} />}
+        <div className="card-actions">
+          {/* Mockup: not wired up yet. */}
+          <button type="button" className="card-action" aria-label={saved ? 'Saved' : 'Save listing'} aria-pressed={saved}>
+            <Icon name={saved ? 'heartFilled' : 'heart'} />
+          </button>
+          <button type="button" className="card-action" aria-label="Share listing"><Icon name="share" /></button>
+        </div>
         {badge && <span className={cx('badge', badge.tone)}>{badge.label}</span>}
-        <span className="fav"><Icon name={saved ? 'heartFilled' : 'heart'} /></span>
-        {checksPassed != null && checksTotal && <VerifiedPill passed={checksPassed} total={checksTotal} />}
       </div>
       <div className="card-body">
         <div className="price">{formatPrice(price)}{isRental && <small>/mo</small>}</div>
         <div className="facts"><span><b>{beds}</b> BHK</span><span><b>{baths}</b> ba</span><span><b>{formatNumber(sqft)}</b> sq ft</span></div>
-        <div className="addr">{address}</div>
+        <a href={href} className="addr card-link">{address}</a>
         <div className="listed-by">{propertyType} for {isRental ? 'rent' : 'sale'} · Listed by {listedBy}</div>
         {(views != null || saves != null) && (
           <div className="card-stats">
@@ -47,6 +62,6 @@ export function ListingCard({ listing, checksTotal, href = '#' }) {
           </div>
         )}
       </div>
-    </a>
+    </article>
   );
 }

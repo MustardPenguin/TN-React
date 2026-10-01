@@ -1,43 +1,72 @@
-.card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); scroll-snap-align: start; transition: .25s; }
-.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+/* Flex column so the stats row can sit at the bottom of every card (cards in
+   a row share the tallest card's height). Only transform/box-shadow animate,
+   and will-change keeps the card on its own layer so hovering doesn't
+   repaint it (which can flicker). */
+.card { position: relative; display: flex; flex-direction: column; background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); scroll-snap-align: start; transition: transform .25s, box-shadow .25s; will-change: transform; }
+/* Hover/focus: lift, a teal outline ring (drawn with box-shadow so it
+   transitions and doesn't affect layout), and teal accents in the body. */
+.card:hover,
+.card:focus-within { box-shadow: var(--shadow-hover), 0 0 0 2px rgba(14,124,123,.55); transform: translateY(-3px); }
+.price, .addr, .card-stats svg { transition: color .25s; }
+.card:hover .price, .card:focus-within .price { color: var(--brand); }
+.card:hover .addr, .card:focus-within .addr { color: var(--text); }
+.card:hover .card-stats svg, .card:focus-within .card-stats svg { color: var(--brand); }
 .card-img { position: relative; overflow: hidden; aspect-ratio: 4/3; background-size: cover; background-position: center; }
 
 /* Shine: a diagonal highlight sweeps across the photo once on hover/focus.
-   Photo only, so it never washes out the price/address text. It rests off
-   the left edge and snaps back when the hover ends, since only the hover
-   state has a transition. */
+   Photo only, so it never washes out the price/address text. When the hover
+   ends it fades out (rather than vanishing mid-photo, which looked like a
+   white flash on quick hovers), then resets off the left edge. */
 .card-img::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.6) 50%, transparent 65%);
-  transform: translateX(-100%); }
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.45) 50%, transparent 65%);
+  transform: translateX(-100%); opacity: 0;
+  transition: opacity .3s ease, transform 0s linear .3s; }
 .card:hover .card-img::after,
-.card:focus-visible .card-img::after { transform: translateX(100%); transition: transform 2s ease; }
+.card:focus-within .card-img::after { transform: translateX(100%); opacity: 1; transition: transform 2s ease, opacity .2s ease; }
 
-.badge { position: absolute; top: 12px; left: 12px; background: #fff; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+/* Stretched link: the address link covers the whole card, so the card stays
+   clickable anywhere. Overlays on the photo sit above it (z-index 2). */
+.card-link { display: block; }
+.card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: var(--radius); }
+.card-link:focus-visible { outline: none; }
+.card-link:focus-visible::after { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+/* ---------- Photo overlays: seal top-left, actions top-right, badge bottom-left ---------- */
+
+/* Compact verification seal: teal "✓ Verified" when complete; dark
+   "3/5 •••○○" when in progress. Click-through, so the photo still opens the
+   listing everywhere outside the buttons. */
+.card-seal { pointer-events: none; position: absolute; top: 12px; left: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px 4px 7px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; color: #fff; box-shadow: 0 2px 8px rgba(10,25,35,.2); }
+.card-seal.is-verified { background: var(--brand); }
+.card-seal.is-partial { background: rgba(15,42,61,.88); }
+.card-seal > svg { width: 13px; height: 13px; }
+.card-seal.is-partial > svg { color: var(--accent); }
+.card-seal-dots { display: inline-flex; gap: 2px; margin-left: 1px; }
+.card-seal-dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.28); }
+.card-seal-dots i.is-passed { background: var(--accent); }
+
+/* Save + share, stacked top-right. Not wired up yet (mockup). */
+.card-actions { position: absolute; top: 10px; right: 10px; z-index: 2; display: grid; gap: 8px; }
+.card-action { width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--text); display: grid; place-items: center; cursor: pointer; transition: transform .2s; }
+.card-action:hover { transform: scale(1.08); }
+.card-action:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.card-action svg { width: 18px; height: 18px; }
+
+/* One promo badge (New, Price cut, Ready to move), bottom-left. */
+.badge { pointer-events: none; position: absolute; left: 12px; bottom: 12px; z-index: 2; background: #fff; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
 .badge.new { background: var(--brand); color: #fff; }
 .badge.cut { background: var(--accent); color: #1a1f2b; }
-.badge.rent { background: #1d3b53; color: #fff; }
 
-.fav { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; }
-.fav svg { width: 18px; height: 18px; }
-
-/* Verification progress, bottom-left of the photo. z-index keeps it above
-   the hover shine. */
-.card-verified { position: absolute; left: 12px; bottom: 12px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border-radius: 999px; background: rgba(15,42,61,.82); backdrop-filter: blur(6px); color: #fff; font-size: 12px; font-weight: 700; }
-.card-verified > svg { width: 13px; height: 13px; color: var(--brand-bright); }
-.card-checks { display: flex; gap: 2px; margin-left: 2px; }
-.card-checks i { width: 7px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.25); }
-.card-checks i.is-passed { background: var(--brand-bright); }
-.card-verified.is-partial > svg { color: var(--accent); }
-.card-verified.is-partial .is-passed { background: var(--accent); }
-
-.card-body { padding: 16px 18px 20px; }
+/* ---------- Body ---------- */
+.card-body { flex: 1; display: flex; flex-direction: column; padding: 16px 18px 20px; }
 .price { font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
 .price small { font-size: 14px; font-weight: 500; color: var(--muted); }
 .facts { display: flex; gap: 14px; font-size: 14px; margin: 4px 0 6px; }
 .facts b { font-weight: 700; }
 .addr { font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .listed-by { font-size: 12px; color: var(--muted); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
-.card-stats { display: flex; gap: 14px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+/* margin-top: auto pins it to the bottom, so it lines up across cards. */
+.card-stats { display: flex; gap: 14px; margin-top: auto; padding-top: 6px; font-size: 12px; color: var(--muted); }
 .card-stats span { display: inline-flex; align-items: center; gap: 4px; }
 .card-stats svg { width: 14px; height: 14px; }
 
