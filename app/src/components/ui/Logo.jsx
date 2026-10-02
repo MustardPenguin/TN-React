@@ -12,7 +12,7 @@ export function Logo({ variant = 'light', href = '#' }) {
       ) : (
         <svg viewBox="0 0 32 32" fill="none"><path d="M16 3 3 14h4v14h18V14h4L16 3Z" fill="currentColor" /><path d="M12 28v-8h8v8" fill="#fff" /></svg>
       )}
-      TrueNest
+      <span className="logo-text">TrueNest</span>
     </a>
   );
 }

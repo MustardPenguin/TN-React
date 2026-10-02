@@ -1,27 +1,8 @@
 import { cx } from '../../lib/cx.js';
 import { formatPrice, formatNumber, formatCount, backgroundImage } from '../../lib/format.js';
 import { Icon } from './Icon.jsx';
+import { VerifiedBadge } from './VerifiedBadge.jsx';
 import './ListingCard.css';
-
-// Compact verification status, top-left of the photo: "✓ Verified" when all
-// checks have passed, otherwise "3/5" plus one dot per check. Steps are done
-// in order, so `passed` means steps 1..passed are done.
-function VerificationSeal({ passed, steps }) {
-  const total = steps.length;
-  const complete = passed >= total;
-  return (
-    <div className={cx('card-seal', complete ? 'is-verified' : 'is-partial')}>
-      <Icon name={complete ? 'check' : 'shieldCheck'} />
-      <span aria-hidden="true">{complete ? 'Verified' : `${passed}/${total}`}</span>
-      {!complete && (
-        <span className="card-seal-dots" aria-hidden="true">
-          {steps.map((step, i) => <i key={step.title} className={i < passed ? 'is-passed' : undefined} />)}
-        </span>
-      )}
-      <span className="sr-only">{complete ? 'Verified' : 'Verification in progress'}: {passed} of {total} checks passed</span>
-    </div>
-  );
-}
 
 // The card is an <article> rather than one big link, so the save/share
 // buttons can be real buttons. `.card-link` (the address) stretches over the
@@ -40,7 +21,6 @@ export function ListingCard({ listing, checkSteps = [], href = '#' }) {
   return (
     <article className="card">
       <div className="card-img" style={backgroundImage(image, fallback)}>
-        {checksPassed != null && checkSteps.length > 0 && <VerificationSeal passed={checksPassed} steps={checkSteps} />}
         <div className="card-actions">
           {/* Mockup: not wired up yet. */}
           <button type="button" className="card-action" aria-label={saved ? 'Saved' : 'Save listing'} aria-pressed={saved}>
@@ -50,6 +30,8 @@ export function ListingCard({ listing, checkSteps = [], href = '#' }) {
         </div>
         {badge && <span className={cx('badge', badge.tone)}>{badge.label}</span>}
       </div>
+      {/* Outside .card-img so its checklist can extend below the photo. */}
+      {checksPassed != null && checkSteps.length > 0 && <VerifiedBadge passed={checksPassed} steps={checkSteps} />}
       <div className="card-body">
         <div className="price">{formatPrice(price)}{isRental && <small>/mo</small>}</div>
         <div className="facts"><span><b>{beds}</b> BHK</span><span><b>{baths}</b> ba</span><span><b>{formatNumber(sqft)}</b> sq ft</span></div>

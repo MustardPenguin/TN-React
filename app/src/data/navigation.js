@@ -1,3 +1,14 @@
+// City filter in the header (components/ui/CityPicker.jsx). The first city is
+// the default. Mockup: picking a city doesn't filter the page yet, and the
+// `homes` counts are placeholders. `image` is a small square thumbnail.
+const cityThumb = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=96&h=96&q=70`;
+
+export const headerCities = [
+  { name: 'Hyderabad', state: 'Telangana', homes: 6120, image: cityThumb('photo-1696941515998-d83f24967aca') }, // Charminar
+  { name: 'Mumbai', state: 'Maharashtra', homes: 3480, image: cityThumb('photo-1529253355930-ddbe423a2ac7') }, // Gateway of India
+  { name: 'Bengaluru', state: 'Karnataka', homes: 2960, image: cityThumb('photo-1565018054866-968e244671af') }, // Vidhana Soudha
+];
+
 export const mainNav = [
   { label: 'Buy', href: '#' },
   { label: 'Rent', href: '#' },

@@ -1,0 +1,27 @@
+/* Positioned by the card (ListingCard.css: .card > .vb). */
+.vb { position: absolute; z-index: 3; }
+
+/* ---------- Button: 36px white circle, same as the save/share buttons ---------- */
+.vb-button { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.95); cursor: pointer; box-shadow: 0 2px 8px rgba(10,25,35,.18); transition: transform .2s, box-shadow .2s; }
+.vb-button:hover, .vb.is-open .vb-button { transform: scale(1.08); box-shadow: 0 4px 14px rgba(10,25,35,.24); }
+.vb-button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.vb-button .mini-ring { width: 26px; height: 26px; } /* ring styles: MiniRing.css */
+
+/* ---------- Checklist card ---------- */
+.vb-card { position: absolute; top: calc(100% + 8px); left: 0; width: 220px; padding: 12px 14px; border-radius: 12px; background: #fff; box-shadow: 0 12px 32px rgba(16,24,40,.2), 0 2px 6px rgba(16,24,40,.08); animation: vb-in .16s ease-out; }
+.vb-card[hidden] { display: none; }
+@keyframes vb-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.vb-card-title { margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--text); }
+.vb-list { list-style: none; display: grid; gap: 6px; }
+.vb-list li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 500; color: var(--text); }
+.vb-list li.is-pending { color: var(--muted); }
+.vb-mark { flex-shrink: 0; display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; }
+.vb-list li.is-passed .vb-mark { background: var(--brand); color: #fff; }
+.vb-list li.is-pending .vb-mark { border: 1.5px dashed #b8c0cb; }
+.vb-mark svg { width: 10px; height: 10px; }
+.vb-pending { margin-left: auto; font-size: 11px; font-weight: 600; color: #b45309; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vb-card { animation: none; }
+}

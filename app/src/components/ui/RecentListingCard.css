@@ -1,0 +1,32 @@
+/* Compact horizontal card. Hover/focus mirrors the featured cards: lift,
+   teal outline ring, teal price. */
+.recent-card { position: relative; display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); scroll-snap-align: start; transition: transform .25s, box-shadow .25s; }
+/* A smaller hover shadow than the featured cards, so it fits inside the
+   row's scroll padding instead of being clipped. */
+.recent-card:hover, .recent-card:focus-within { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16,24,40,.12), 0 0 0 2px rgba(14,124,123,.55); }
+
+.recent-thumb { flex-shrink: 0; width: 84px; height: 84px; border-radius: 10px; background-size: cover; background-position: center; }
+
+.recent-body { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.recent-price { font-size: 17px; font-weight: 800; letter-spacing: -.01em; transition: color .25s; }
+.recent-price small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.recent-card:hover .recent-price, .recent-card:focus-within .recent-price { color: var(--brand); }
+
+/* Stretched link over the whole card. */
+.recent-link { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.recent-link::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+.recent-link:focus-visible { outline: none; }
+.recent-link:focus-visible::after { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+.recent-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; font-size: 12px; }
+.recent-meta > span:first-child { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
+.recent-meta .mini-ring { width: 16px; height: 16px; }
+/* Too small to read at 16px, and the "3/5" label already says it. */
+.recent-meta .mini-ring-count { display: none; }
+.recent-verified { color: var(--brand-dark); }
+.recent-partial { color: #b45309; }
+.recent-viewed { color: var(--muted); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .recent-card { transition: none; }
+}

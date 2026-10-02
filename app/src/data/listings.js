@@ -1,6 +1,7 @@
 // Placeholder data until listings come from an API.
 // Prices are in rupees; `listingType` is 'sale' | 'rent'; rent prices are per month.
-// `beds` is the BHK count. Society/street names are made up.
+// `beds` is the BHK count. Society/street names are made up. `locality` is the
+// short area name used on compact cards.
 // `listedBy` is 'owner' | 'builder' (TrueNest lists for both).
 // `views` / `saves`: how many people viewed / saved it (`saved` is whether the
 // current visitor did). `checksPassed`: verification checks passed, out of the
@@ -27,6 +28,7 @@ export const featuredListings = [
     propertyType: 'Independent house',
     beds: 4, baths: 4, sqft: 2400,
     address: 'Plot 42, Road No. 5, Manikonda, Hyderabad 500089',
+    locality: 'Manikonda',
     saved: false,
   },
   {
@@ -40,6 +42,7 @@ export const featuredListings = [
     propertyType: 'Apartment',
     beds: 2, baths: 2, sqft: 1250,
     address: 'Flat 1204, Tower B, Skyline Heights, Madhapur, Hyderabad 500081',
+    locality: 'Madhapur',
     saved: false,
   },
   {
@@ -54,12 +57,13 @@ export const featuredListings = [
     propertyType: 'Independent house',
     beds: 3, baths: 3, sqft: 1800,
     address: 'Plot 57, Sainikpuri, Secunderabad, Hyderabad 500094',
+    locality: 'Sainikpuri',
     saved: true,
   },
   {
     id: 'kondapur-lakeview-3b',
     listedBy: 'owner',
-    views: 642, saves: 38, checksPassed: 2,
+    views: 642, saves: 38, checksPassed: 5,
     image: unsplash('photo-1549499090-c9203d2b20ad'),
     fallback: 'linear-gradient(135deg,#fbcfe8,#6b21a8)',
     price: 22000,
@@ -67,6 +71,7 @@ export const featuredListings = [
     propertyType: 'Apartment',
     beds: 1, baths: 1, sqft: 650,
     address: 'Flat 3B, Lake View Apartments, Kondapur, Hyderabad 500084',
+    locality: 'Kondapur',
     saved: false,
   },
   {
@@ -81,6 +86,7 @@ export const featuredListings = [
     propertyType: 'Villa',
     beds: 5, baths: 5, sqft: 4200,
     address: 'Villa 8, Green Meadows, Kokapet, Hyderabad 500075',
+    locality: 'Kokapet',
     saved: false,
   },
   {
@@ -95,6 +101,17 @@ export const featuredListings = [
     propertyType: 'Villa',
     beds: 4, baths: 4, sqft: 3100,
     address: 'Villa 15, Orchid Enclave, Gachibowli, Hyderabad 500032',
+    locality: 'Gachibowli',
     saved: false,
   },
+];
+
+// Placeholder "Recently viewed" history, most recent first: listing ids plus
+// display text for when. In a real build this comes from the visitor's
+// history (API or local storage), and is empty for first-time visitors.
+export const recentlyViewed = [
+  { id: 'gachibowli-orchid-15', viewed: '2 hours ago' },
+  { id: 'sainikpuri-plot-57', viewed: 'Yesterday' },
+  { id: 'kokapet-greenmeadows-8', viewed: '3 days ago' },
+  { id: 'madhapur-skyline-b1204', viewed: 'Last week' },
 ];

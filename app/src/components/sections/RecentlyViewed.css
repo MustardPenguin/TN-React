@@ -1,0 +1,22 @@
+/* Continues the Featured listings band: same background, no top padding, a
+   thin divider instead. */
+.recent { background: var(--bg-soft); padding-top: 0; }
+.recent .container { padding-top: 28px; border-top: 1px solid var(--border); }
+@media (max-width: 760px) {
+  .recent .container { border-top: 0; padding-top: 0; }
+}
+
+.recent-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+.recent-title { font-size: 20px; font-weight: 800; letter-spacing: -.01em; }
+.recent-head .link-arrow { font-size: 14px; }
+
+/* Horizontal row; same scroll-area padding trick as .carousel, so the hover
+   lift and outline aren't clipped. */
+.recent-row { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 48px) / 4); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: -16px -16px -24px; padding: 16px 16px 24px; scrollbar-width: thin; }
+
+@media (max-width: 1024px) {
+  .recent-row { grid-auto-columns: calc((100% - 16px) / 2.3); }
+}
+@media (max-width: 760px) {
+  .recent-row { grid-auto-columns: 82%; }
+}
