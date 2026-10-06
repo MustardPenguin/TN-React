@@ -1,0 +1,28 @@
+.tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* Hover/focus: lift, green border, an accent bar grows across the top, the
+   title turns green and the link arrow slides right. */
+.tool-card { align-items: center; position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 30px 28px 28px; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; transition: transform .25s, box-shadow .25s, border-color .25s; }
+.tool-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--brand); transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
+.tool-card:hover, .tool-card:focus-within { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--brand); }
+.tool-card:hover::before, .tool-card:focus-within::before { transform: scaleX(1); }
+
+.tool-art { width: 60%; object-fit: contain; margin-bottom: 20px; }
+.tool-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; transition: color .25s; }
+.tool-card:hover h3, .tool-card:focus-within h3 { color: var(--brand); }
+.tool-card p { flex: 1; color: var(--muted); margin-bottom: 22px; }
+
+/* Stretched link: covers the whole card. */
+.tool-link { color: var(--brand); font-weight: 600; white-space: nowrap; }
+.tool-link::after { content: ""; position: absolute; inset: 0; }
+.tool-link span { display: inline-block; transition: transform .25s; }
+.tool-card:hover .tool-link span, .tool-card:focus-within .tool-link span { transform: translateX(4px); }
+.tool-link:focus-visible { outline: none; }
+.tool-card:has(.tool-link:focus-visible) { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+@media (max-width: 900px) {
+  .tools-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tool-card, .tool-card::before, .tool-link span { transition: none; }
+}

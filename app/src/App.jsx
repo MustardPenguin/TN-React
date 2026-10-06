@@ -7,6 +7,7 @@ import { FeaturedListings } from './components/sections/FeaturedListings.jsx';
 import { RecentlyViewed } from './components/sections/RecentlyViewed.jsx';
 import { ListYourProperty } from './components/sections/ListYourProperty.jsx';
 import { Stats } from './components/sections/Stats.jsx';
+import { Tools } from './components/sections/Tools.jsx';
 import { Cities } from './components/sections/Cities.jsx';
 import { Testimonials } from './components/sections/Testimonials.jsx';
 import { CtaBanner } from './components/sections/CtaBanner.jsx';
@@ -14,7 +15,7 @@ import { headerCities, mainNav, headerIconLinks, footerColumns, legalLinks, soci
 import { featuredListings, listingFilters, recentlyViewed } from './data/listings.js';
 import { cities, popularSearches } from './data/cities.js';
 import { heroSlides, heroHeadlines, heroSlideInterval, heroSearchSuggestions } from './data/hero.js';
-import { paths, listingSteps, stats, testimonials } from './data/marketing.js';
+import { paths, listingSteps, stats, testimonials, toolsTitle, tools } from './data/marketing.js';
 import { verificationIntro, verificationSteps, verificationComplete } from './data/verification.js';
 
 // Page composition. This is the only place data comes in: components below
@@ -47,6 +48,7 @@ export function App() {
           <Verification intro={verificationIntro} steps={verificationSteps} complete={verificationComplete} />
           <ListYourProperty steps={listingSteps} />
           <Stats items={stats} />
+          <Tools title={toolsTitle} items={tools} />
           <Cities cities={cities} />
           <Testimonials items={testimonials} />
           <CtaBanner

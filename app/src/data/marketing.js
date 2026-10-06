@@ -32,3 +32,27 @@ export const testimonials = [
   { rating: 5, quote: 'I listed my flat on a Monday and had three site visits booked by Friday.', name: 'Rahul Reddy', initials: 'RR', role: 'Property owner · Placeholder', color: '#1d3b53' },
   { rating: 4, quote: 'The listing photos and details were accurate, which saved us a lot of wasted visits.', name: 'Ananya Rao', initials: 'AR', role: 'Home buyer · Placeholder', color: '#b45309' },
 ];
+
+// Buyer tools section (below Stats). Links are placeholders. Each card can
+// later take an optional `image` (e.g. localImage('tools/buyability.png')).
+export const toolsTitle = 'Everything you need to feel sure before you commit';
+export const tools = [
+  {
+    title: 'Buyability',
+    body: "How much home your income and savings can buy in Hyderabad — with Telangana's real charges — and which loan type costs least.",
+    link: { label: 'Work it out', href: '#' },
+    image: localImage('tools/buyability.png')
+  },
+  {
+    title: 'Price trends',
+    body: 'What homes in each neighbourhood are asking now, how fast they sell and how much room there is to negotiate — from our own listings and official indices.',
+    link: { label: 'See the trend', href: '#' },
+    image: localImage('tools/trends.png')
+  },
+  {
+    title: 'Compare properties',
+    body: 'Line up shortlisted homes on price, area, checks and commute, then share the sheet with family in Hyderabad.',
+    link: { label: 'Compare now', href: '#' },
+    image: localImage('tools/compare.png')
+  },
+];
