@@ -3,6 +3,6 @@
 .path-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
 .path-card p { color: var(--muted); margin-bottom: 22px; flex: 1; }
 
-/* Spot illustration (components/ui/Illustration.js) in place of an icon. */
+/* Spot image (or Illustration.jsx drawing) in place of an icon. */
 .path-art { height: 160px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
-.path-art svg { height: 100%; width: auto; display: block; }
+.path-art svg, .path-art img { height: 100%; width: auto; max-width: 100%; object-fit: contain; display: block; }

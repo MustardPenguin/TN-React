@@ -1,10 +1,14 @@
 // Static landing-page copy.
+import { localImage } from '../lib/images.js';
 
-// `illustration` names an entry in components/ui/Illustration.js.
+// `image` is a file in assets/images/pathCard. (`illustration`, a name from
+// components/ui/Illustration.jsx, can be used instead of an image.)
 export const paths = [
-  { illustration: 'buyer', title: 'Buy a home', body: 'Explore homes for sale with detailed photos, pricing history, and locality info.', link: { label: 'Browse homes', href: '#' } },
-  { illustration: 'renter', title: 'Rent a home', body: 'Find apartments, villas, and independent houses for rent that fit your budget and lifestyle.', link: { label: 'Find rentals', href: '#' } },
-  { illustration: 'owner', title: 'List your property', body: 'Selling a home or a project? Get it verified and reach serious buyers, here and abroad.', link: { label: 'Start a listing', href: '#' } },
+  { image: localImage('pathCard/buy.png'), title: 'Buy a home', body: 'Explore homes for sale with detailed photos, pricing history, and locality info.', link: { label: 'Browse homes', href: '#' } },
+  { image: localImage('pathCard/rent.png'), title: 'Rent a home', body: 'Find apartments, villas, and independent houses for rent that fit your budget and lifestyle.', link: { label: 'Find rentals', href: '#' } },
+  // list-arch.png = list.png with a beige arch added behind it, to match the
+  // other two (list.png is kept unchanged).
+  { image: localImage('pathCard/list-arch.png'), title: 'List your property', body: 'Selling a home or a project? Get it verified and reach serious buyers, here and abroad.', link: { label: 'Start a listing', href: '#' } },
 ];
 
 // "List your property" section. Verification is a step of its own, and buyers

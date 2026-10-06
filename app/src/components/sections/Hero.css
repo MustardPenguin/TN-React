@@ -1,9 +1,17 @@
 /* The gradient shows while images load (or if they fail).
    Sticky: the hero stays put while .page-sheet slides over it. `--hero-top`
-   is set in Hero.js so a hero taller than the window scrolls until its bottom
-   is visible before it pins. */
-.hero { position: sticky; top: var(--hero-top, 68px); isolation: isolate; overflow: hidden; min-height: 560px; display: flex; align-items: center; padding: 96px 0;
-  background: linear-gradient(135deg, #0e7c7b, #1d3b53); }
+   is set in Hero.jsx so a hero taller than the window scrolls until its
+   bottom is visible before it pins.
+   Full-screen: at least the visible height minus the header, capped at
+   1000px for very tall screens. It's a minimum, so on short screens the hero
+   simply grows to fit its content (and scrolls) instead of being squeezed.
+   svh = the height with mobile browser bars showing, so it doesn't jump as
+   they slide in and out. The 560px line is a fallback for older browsers. */
+.hero { position: sticky; top: var(--hero-top, 68px); isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 96px 0;
+  min-height: 560px; min-height: min(calc(100svh - var(--header-h)), 1000px);
+  background: linear-gradient(135deg, #0e7c7b, #1d3b53);
+  /* White frame on the left and right; the slides sit inside it. */
+  border-inline: 2.5px solid #fff; }
 
 /* Slideshow: stacked image layers under a dark overlay for text contrast. */
 .hero-slides { position: absolute; inset: 0; z-index: -1; }
@@ -19,7 +27,7 @@
 .hero-controls { position: absolute; left: 0; right: 0; bottom: 24px; }
 .hero-controls .container { display: flex; justify-content: flex-end; }
 .hero-inner { text-align: center; color: #fff; width: 100%; }
-.hero h1 { font-size: clamp(36px, 5.5vw, 60px); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+.hero h1 { font-size: clamp(36px, 4.75vw, 60px); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
 .hero p { font-size: clamp(16px, 2vw, 20px); opacity: .92; margin: 16px auto 36px; max-width: 620px; }
 
 /* Headlines stack in one cell; the outgoing one fades out, then the next fades in.
@@ -47,7 +55,7 @@
 .hero-tags span { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); padding: 6px 14px; border-radius: 999px; }
 
 @media (max-width: 760px) {
-  .hero { min-height: 480px; padding: 64px 0; }
+  .hero { padding: 64px 0; border-inline-width: 8px; }
   .search { padding-left: 14px; }
   .search .btn span { display: none; }
   .hero-controls { bottom: 14px; }

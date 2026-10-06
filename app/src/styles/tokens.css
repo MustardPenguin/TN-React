@@ -1,5 +1,5 @@
 :root {
-  --brand: #0e7c7b;
+  --brand: #2F7D5A;
   --brand-dark: #0a5f5e;
   --brand-light: #e6f4f3;
   --brand-bright: #3cc4b9; /* brand teal that reads on dark navy */
@@ -13,4 +13,5 @@
   --shadow: 0 1px 3px rgba(16,24,40,.08), 0 4px 14px rgba(16,24,40,.06);
   --shadow-hover: 0 8px 28px rgba(16,24,40,.14);
   --max: 1200px;
+  --header-h: 69px; /* .nav 68px + 1px border (Header.css) */
 }

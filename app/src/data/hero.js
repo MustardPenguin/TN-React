@@ -16,7 +16,7 @@ export const heroSlides = [
 ];
 
 /** Time each image stays on screen, in ms. */
-export const heroSlideInterval = 6000;
+export const heroSlideInterval = 45000;
 
 // Headline + subheading shown over the slideshow. `title` lines are joined
 // with line breaks. If there's one per slide they're paired with the slides
