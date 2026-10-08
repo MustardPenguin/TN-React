@@ -2,13 +2,13 @@
    Sticky: the hero stays put while .page-sheet slides over it. `--hero-top`
    is set in Hero.jsx so a hero taller than the window scrolls until its
    bottom is visible before it pins.
-   Full-screen: at least the visible height minus the header, capped at
-   1000px for very tall screens. It's a minimum, so on short screens the hero
-   simply grows to fit its content (and scrolls) instead of being squeezed.
+   Full-screen: at least the visible height minus the header, on any screen
+   size (no upper cap). It's a minimum, so on short screens the hero simply
+   grows to fit its content (and scrolls) instead of being squeezed.
    svh = the height with mobile browser bars showing, so it doesn't jump as
    they slide in and out. The 560px line is a fallback for older browsers. */
 .hero { position: sticky; top: var(--hero-top, 68px); isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 96px 0;
-  min-height: 560px; min-height: min(calc(100svh - var(--header-h)), 1000px);
+  min-height: 560px; min-height: calc(100svh - var(--header-h));
   background: linear-gradient(135deg, #0e7c7b, #1d3b53);
   /* White frame on the left and right; the slides sit inside it. */
   border-inline: 2.5px solid #fff; }
@@ -61,6 +61,27 @@
   .hero-controls { bottom: 14px; }
   .hero-controls .container { justify-content: center; }
 }
+/* Short screens (under 760px tall, e.g. 1366×768 laptops, 1024×600 tablets,
+   smaller phones): shrink the padding, headline and spacing with the screen
+   height (svh) so the hero still fits. Taller screens are unaffected.
+   Bottom padding keeps clear of the slideshow controls. */
+@media (max-height: 760px) {
+  .hero { padding: clamp(20px, 5svh, 64px) 0 clamp(72px, 11svh, 96px); }
+  .hero h1 { font-size: min(clamp(36px, 4.75vw, 60px), 6.5svh); }
+  .hero-copy-item.headline-medium h1 { font-size: min(clamp(30px, 4.4vw, 48px), 5.4svh); }
+  .hero-copy-item.headline-small h1 { font-size: min(clamp(26px, 3.6vw, 40px), 4.6svh); }
+  .hero p { margin: 12px auto min(36px, 4svh); }
+  .tabs { margin-bottom: 8px; }
+  .search input { padding: 11px 12px; }
+  .hero-tags { margin-top: 12px; }
+}
+/* Short phones: popular-search tags become one swipeable row instead of two. */
+@media (max-width: 760px) and (max-height: 760px) {
+  .hero { padding-bottom: 68px; }
+  .hero-tags { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .hero-tags span { flex-shrink: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-slide.is-active,
   .hero-slide.is-leaving { animation: none; }

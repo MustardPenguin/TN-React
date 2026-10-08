@@ -5,13 +5,13 @@ const cityThumb = (id) => `https://images.unsplash.com/${id}?auto=format&fit=cro
 
 export const headerCities = [
   { name: 'Hyderabad', state: 'Telangana', homes: 6120, image: cityThumb('photo-1696941515998-d83f24967aca') }, // Charminar
-  { name: 'Mumbai', state: 'Maharashtra', homes: 3480, image: cityThumb('photo-1529253355930-ddbe423a2ac7') }, // Gateway of India
   { name: 'Bengaluru', state: 'Karnataka', homes: 2960, image: cityThumb('photo-1565018054866-968e244671af') }, // Vidhana Soudha
 ];
 
 export const mainNav = [
   { label: 'Buy', href: '#' },
   { label: 'Rent', href: '#' },
+  { label: 'List', href: '#' }
 ];
 
 // Icon-only links at the top right of the header. `label` is the accessible

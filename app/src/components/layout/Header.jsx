@@ -18,7 +18,6 @@ export function Header({ links, iconLinks = [], cities = [], onCityChange }) {
           {iconLinks.map((link) => (
             <a key={link.label} href={link.href} className="icon-link" aria-label={link.label} title={link.label}><Icon name={link.icon} /></a>
           ))}
-          <a href="#" className="btn btn-primary">List your property</a>
           <button className="menu-btn" aria-label="Menu"><Icon name="menu" /></button>
         </div>
       </div>

@@ -7,7 +7,6 @@ import { Icon } from '../ui/Icon.jsx';
 import { SlideControls } from '../ui/SlideControls.jsx';
 import './Hero.css';
 
-const TABS = ['Buy', 'Rent'];
 const SEARCH_PLACEHOLDER = 'Enter a locality, project, or PIN code';
 const CURSOR = '|';
 const CURSOR_BLINK_MS = 530;
@@ -166,9 +165,6 @@ export function Hero({ activeTab = 'Buy', popularSearches, searchSuggestions = [
       <div className="container hero-inner">
         <HeroCopy headlines={headlines} active={copyIndex} />
         <div className="search-card">
-          <div className="tabs">
-            {TABS.map((tab) => <a key={tab} href="#" className={cx('tab', tab === activeTab && 'active')}>{tab}</a>)}
-          </div>
           <HeroSearch suggestions={searchSuggestions} />
           <div className="hero-tags">
             {popularSearches.map((term) => <span key={term}>{term}</span>)}
