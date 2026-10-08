@@ -7,11 +7,11 @@
    grows to fit its content (and scrolls) instead of being squeezed.
    svh = the height with mobile browser bars showing, so it doesn't jump as
    they slide in and out. The 560px line is a fallback for older browsers. */
-.hero { position: sticky; top: var(--hero-top, 68px); isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 96px 0;
-  min-height: 560px; min-height: calc(100svh - var(--header-h));
+.hero { position: sticky; top: var(--hero-top, var(--header-h)); isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 96px 0;
+  min-height: 560px; min-height: calc(100svh - var(--header-h) - 5svh);
   background: linear-gradient(135deg, #0e7c7b, #1d3b53);
   /* White frame on the left and right; the slides sit inside it. */
-  border-inline: 2.5px solid #fff; }
+  border-inline: 4px solid #fff; }
 
 /* Slideshow: stacked image layers under a dark overlay for text contrast. */
 .hero-slides { position: absolute; inset: 0; z-index: -1; }
@@ -55,7 +55,7 @@
 .hero-tags span { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); padding: 6px 14px; border-radius: 999px; }
 
 @media (max-width: 760px) {
-  .hero { padding: 64px 0; border-inline-width: 8px; }
+  .hero { padding: 64px 0; border-inline-width: 2px; }
   .search { padding-left: 14px; }
   .search .btn span { display: none; }
   .hero-controls { bottom: 14px; }

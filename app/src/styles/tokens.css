@@ -13,5 +13,5 @@
   --shadow: 0 1px 3px rgba(16,24,40,.08), 0 4px 14px rgba(16,24,40,.06);
   --shadow-hover: 0 8px 28px rgba(16,24,40,.14);
   --max: 1200px;
-  --header-h: 69px; /* .nav 68px + 1px border (Header.css) */
+  --header-h: 61px; /* .nav 60px + 1px border (Header.css); update both together */
 }
