@@ -1,14 +1,19 @@
 /* The gradient shows while images load (or if they fail).
-   Sticky: the hero stays put while .page-sheet slides over it. `--hero-top`
-   is set in Hero.jsx so a hero taller than the window scrolls until its
-   bottom is visible before it pins.
-   Full-screen: at least the visible height minus the header, on any screen
-   size (no upper cap). It's a minimum, so on short screens the hero simply
-   grows to fit its content (and scrolls) instead of being squeezed.
-   svh = the height with mobile browser bars showing, so it doesn't jump as
-   they slide in and out. The 560px line is a fallback for older browsers. */
-.hero { position: sticky; top: var(--hero-top, var(--header-h)); isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 96px 0;
-  min-height: 560px; min-height: calc(100svh - var(--header-h) - 5svh);
+   Under the sheet: the page sheet overlaps the hero's bottom by
+   --sheet-overlap (for its rounded corners), so the hero is that much taller
+   and has that much extra bottom padding.
+   Sticky: the hero stays put just below the header while .page-sheet slides
+   over it. `--hero-top` is set in Hero.jsx so a hero taller than the window
+   scrolls until its content is visible before it pins.
+   Full-screen: the sheet's top edge lands 5svh above the bottom of the screen
+   (a sliver of the next section shows), on any screen size. It's a minimum,
+   so on short screens the hero simply grows to fit its content (and scrolls)
+   instead of being squeezed. svh = the height with mobile browser bars
+   showing, so it doesn't jump as they slide in and out. The 560px line is a
+   fallback for older browsers. */
+.hero { position: sticky; top: var(--hero-top, var(--header-h)); isolation: isolate; overflow: hidden; display: flex; align-items: center;
+  padding: 96px 0 calc(96px + var(--sheet-overlap));
+  min-height: 560px; min-height: calc(100svh - var(--header-h) - 5svh + var(--sheet-overlap));
   background: linear-gradient(135deg, #0e7c7b, #1d3b53);
   /* White frame on the left and right; the slides sit inside it. */
   border-inline: 4px solid #fff; }
@@ -24,7 +29,7 @@
 .hero-slide.is-leaving { animation: hero-zoom calc(var(--slide-interval, 6s) + 1.2s) ease-out both; }
 @keyframes hero-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
 
-.hero-controls { position: absolute; left: 0; right: 0; bottom: 24px; }
+.hero-controls { position: absolute; left: 0; right: 0; bottom: calc(24px + var(--sheet-overlap)); }
 .hero-controls .container { display: flex; justify-content: flex-end; }
 .hero-inner { text-align: center; color: #fff; width: 100%; }
 .hero h1 { font-size: clamp(36px, 4.75vw, 60px); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
@@ -55,10 +60,10 @@
 .hero-tags span { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); padding: 6px 14px; border-radius: 999px; }
 
 @media (max-width: 760px) {
-  .hero { padding: 64px 0; border-inline-width: 2px; }
+  .hero { padding: 64px 0 calc(64px + var(--sheet-overlap)); border-inline-width: 2px; }
   .search { padding-left: 14px; }
   .search .btn span { display: none; }
-  .hero-controls { bottom: 14px; }
+  .hero-controls { bottom: calc(14px + var(--sheet-overlap)); }
   .hero-controls .container { justify-content: center; }
 }
 /* Short screens (under 760px tall, e.g. 1366×768 laptops, 1024×600 tablets,
@@ -66,7 +71,7 @@
    height (svh) so the hero still fits. Taller screens are unaffected.
    Bottom padding keeps clear of the slideshow controls. */
 @media (max-height: 760px) {
-  .hero { padding: clamp(20px, 5svh, 64px) 0 clamp(72px, 11svh, 96px); }
+  .hero { padding: clamp(20px, 5svh, 64px) 0 calc(clamp(72px, 11svh, 96px) + var(--sheet-overlap)); }
   .hero h1 { font-size: min(clamp(36px, 4.75vw, 60px), 6.5svh); }
   .hero-copy-item.headline-medium h1 { font-size: min(clamp(30px, 4.4vw, 48px), 5.4svh); }
   .hero-copy-item.headline-small h1 { font-size: min(clamp(26px, 3.6vw, 40px), 4.6svh); }
@@ -77,7 +82,7 @@
 }
 /* Short phones: popular-search tags become one swipeable row instead of two. */
 @media (max-width: 760px) and (max-height: 760px) {
-  .hero { padding-bottom: 68px; }
+  .hero { padding-bottom: calc(68px + var(--sheet-overlap)); }
   .hero-tags { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
   .hero-tags span { flex-shrink: 0; }
 }

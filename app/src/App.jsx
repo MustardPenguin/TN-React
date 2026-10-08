@@ -31,7 +31,8 @@ const recentItems = recentlyViewed
 export function App() {
   return (
     <>
-      <Header links={mainNav} iconLinks={headerIconLinks} cities={headerCities} />
+      {/* Transparent over the hero until the page sheet reaches it, then frosted. */}
+      <Header links={mainNav} iconLinks={headerIconLinks} cities={headerCities} transparentUntil=".page-sheet" />
       <main>
         <Hero
           popularSearches={popularSearches}

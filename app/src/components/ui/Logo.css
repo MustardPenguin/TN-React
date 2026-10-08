@@ -1,3 +1,5 @@
-.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 22px; letter-spacing: -.02em; color: var(--brand); }
-.logo svg { width: 30px; height: 30px; }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 22px; letter-spacing: -.02em; color: var(--brand); transition: color .3s; }
+.logo svg { width: 30px; height: 30px; flex-shrink: 0; }
+/* Check inside the house; the header overrides --logo-cut over the hero. */
+.logo-check { fill: none; stroke: var(--logo-cut, #fff); stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; transition: stroke .3s; }
 .logo--dark { color: #fff; }

@@ -14,4 +14,5 @@
   --shadow-hover: 0 8px 28px rgba(16,24,40,.14);
   --max: 1200px;
   --header-h: 61px; /* .nav 60px + 1px border (Header.css); update both together */
+  --sheet-overlap: 24px; /* page sheet's corner radius = how far it overlaps the hero */
 }

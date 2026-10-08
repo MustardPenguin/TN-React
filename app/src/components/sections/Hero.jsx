@@ -110,14 +110,19 @@ function HeroSearch({ suggestions }) {
 
 // The hero is sticky (Hero.css) so the page sheet slides over it. Pin it just
 // below the header, unless header + hero is taller than the window: then use a
-// negative offset so it scrolls until its bottom edge is in view first.
-// The header is a sibling component, so it's looked up in the document.
+// negative offset so it scrolls until its content's bottom is in view first.
+// The bottom --sheet-overlap of the hero is always under the sheet, so it
+// doesn't count. The header is a sibling component, so it's looked up in the
+// document.
 function useStickyTop(ref) {
   const [top, setTop] = useState(null);
   useLayoutEffect(() => {
     const hero = ref.current;
     const header = document.querySelector('header');
-    const update = () => setTop(Math.min(header?.offsetHeight ?? 0, window.innerHeight - hero.offsetHeight));
+    const update = () => {
+      const overlap = parseFloat(getComputedStyle(hero).getPropertyValue('--sheet-overlap')) || 0;
+      setTop(Math.min(header?.offsetHeight ?? 0, window.innerHeight - (hero.offsetHeight - overlap)));
+    };
     const observer = new ResizeObserver(update); // hero height changes with copy/width
     observer.observe(hero);
     if (header) observer.observe(header);
