@@ -1,0 +1,75 @@
+/* Horizontal on desktop/tablet (photo left, details right) to keep the
+   section short; stacked on phones. */
+.builder-card { scroll-snap-align: start; display: grid; grid-template-columns: 44% 1fr; background: #fff; border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; transition: box-shadow .25s, transform .25s; }
+.builder-card:hover, .builder-card:focus-within { box-shadow: var(--shadow-hover), 0 0 0 2px rgba(47,125,90,.5); transform: translateY(-3px); }
+
+/* ---------- Photo ---------- */
+.bc-media { position: relative; min-height: 100%; }
+.bc-photo { position: absolute; inset: 0; background: var(--brand-light); overflow: hidden; touch-action: pan-y; }
+.bc-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s; }
+.bc-photo img.is-active { opacity: 1; }
+.bc-photo::after { content: ""; position: absolute; inset: auto 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.35)); pointer-events: none; }
+
+.bc-logo { position: absolute; z-index: 2; top: 12px; left: 12px; right: 12px; width: max-content; max-width: calc(100% - 24px); display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; background: rgba(255,255,255,.95); box-shadow: 0 2px 8px rgba(0,0,0,.15); font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
+.bc-logo i, .bc-logo img { flex-shrink: 0; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; object-fit: cover; color: #fff; font-style: normal; font-size: 11px; font-weight: 800; }
+
+/* Arrows appear on hover / keyboard focus; dots have a 24px tap area. */
+.bc-photo-btn { position: absolute; z-index: 2; top: 50%; translate: 0 -50%; width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--text); display: grid; place-items: center; cursor: pointer; opacity: 0; transition: opacity .2s; }
+.bc-photo-btn svg { width: 16px; height: 16px; }
+.bc-photo-btn.prev { left: 10px; }
+.bc-photo-btn.next { right: 10px; }
+.builder-card:hover .bc-photo-btn, .bc-photo-btn:focus-visible { opacity: 1; }
+.bc-photo-btn:focus-visible, .bc-dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.bc-dots { position: absolute; z-index: 2; bottom: 4px; left: 50%; translate: -50% 0; display: flex; }
+.bc-dot { position: relative; width: 24px; height: 24px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 999px; transition: width .25s; }
+.bc-dot::before { content: ""; position: absolute; left: 8px; right: 8px; top: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.55); transition: background .25s; }
+.bc-dot.is-active { width: 36px; }
+.bc-dot.is-active::before { background: #fff; }
+
+/* ---------- Body ---------- */
+.bc-body { min-width: 0; display: flex; flex-direction: column; padding: 18px 20px; }
+.bc-builder { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bc-builder b { color: var(--text); font-weight: 700; }
+.bc-project { margin-top: 4px; font-size: 20px; font-weight: 800; letter-spacing: -.01em; line-height: 1.25; }
+.bc-loc { font-size: 14px; color: var(--muted); }
+.bc-meta { display: grid; grid-template-columns: auto auto auto; justify-content: start; gap: 4px 22px; margin: 12px 0 10px; }
+.bc-meta div { min-width: 0; }
+.bc-meta dt { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.bc-meta dd { font-size: 15px; font-weight: 700; white-space: nowrap; }
+.bc-facts { display: flex; flex-wrap: wrap; gap: 2px 14px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+.bc-facts b { color: var(--text); }
+.bc-rera { font-size: 12px; }
+
+/* ---------- Buttons: primary pill with a sliding arrow, soft secondary ---------- */
+.bc-actions { margin-top: auto; padding-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.bc-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 9px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background .2s, color .2s, box-shadow .2s; }
+.bc-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.bc-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.bc-btn-primary { background: var(--brand); color: #fff; box-shadow: 0 4px 12px rgba(47,125,90,.28); }
+.bc-btn-primary svg { transition: transform .2s; }
+.bc-btn-primary:hover { background: #276b4c; box-shadow: 0 6px 16px rgba(47,125,90,.36); }
+.bc-btn-primary:hover svg, .bc-btn-primary:focus-visible svg { transform: translateX(3px); }
+.bc-btn-soft { background: #e8f1ec; color: #1f5a40; }
+.bc-btn-soft:hover { background: #d6e8de; }
+
+/* Tablet: card is narrower, so the three details wrap to two columns. */
+@media (max-width: 1024px) {
+  .bc-meta { grid-template-columns: auto auto; }
+}
+/* Phones: stacked, with a short wide photo. */
+@media (max-width: 760px) {
+  .builder-card { grid-template-columns: 1fr; }
+  .bc-media { min-height: 0; }
+  .bc-photo { position: relative; inset: auto; aspect-ratio: 2 / 1; }
+  .bc-photo-btn { display: none; }
+  .bc-body { padding: 14px 16px 16px; }
+  .bc-builder { white-space: normal; }
+  .bc-project { font-size: 18px; }
+  .bc-meta { grid-template-columns: 1fr 1fr; column-gap: 12px; }
+  .bc-meta .bc-price { grid-column: 1 / -1; }
+  .bc-meta dd { font-size: 14px; white-space: normal; }
+  .bc-actions .bc-btn { flex: 1; justify-content: center; padding-inline: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .builder-card, .bc-photo img, .bc-photo-btn, .bc-dot, .bc-dot::before, .bc-btn, .bc-btn-primary svg { transition: none; }
+}

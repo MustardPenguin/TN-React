@@ -5,6 +5,7 @@ import { Verification } from './components/sections/Verification.jsx';
 import { Paths } from './components/sections/Paths.jsx';
 import { FeaturedListings } from './components/sections/FeaturedListings.jsx';
 import { RecentlyViewed } from './components/sections/RecentlyViewed.jsx';
+import { Builders } from './components/sections/Builders.jsx';
 import { ListYourProperty } from './components/sections/ListYourProperty.jsx';
 import { Stats } from './components/sections/Stats.jsx';
 import { Tools } from './components/sections/Tools.jsx';
@@ -17,6 +18,7 @@ import { cities, popularSearches } from './data/cities.js';
 import { heroSlides, heroHeadlines, heroSlideInterval, heroSearchSuggestions } from './data/hero.js';
 import { paths, listingSteps, stats, testimonials, toolsTitle, tools } from './data/marketing.js';
 import { verificationIntro, verificationSteps, verificationComplete } from './data/verification.js';
+import { buildersIntro, builders } from './data/builders.js';
 
 // Page composition. This is the only place data comes in: components below
 // receive everything as props, so swapping src/data/ for API calls later only
@@ -46,6 +48,7 @@ export function App() {
           <Paths items={paths} />
           <FeaturedListings listings={featuredListings} filters={listingFilters} location="Hyderabad" checkSteps={verificationSteps} />
           <RecentlyViewed items={recentItems} checkSteps={verificationSteps} />
+          <Builders intro={buildersIntro} builders={builders} />
           <Verification intro={verificationIntro} steps={verificationSteps} complete={verificationComplete} />
           <ListYourProperty steps={listingSteps} />
           <Stats items={stats} />

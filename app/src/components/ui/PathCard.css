@@ -1,8 +1,18 @@
-.path-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; background: #fff; transition: .25s; display: flex; flex-direction: column; }
+.path-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; background: #fff; transition: .25s; display: flex; flex-direction: column; }
 .path-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); border-color: transparent; }
-.path-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
-.path-card p { color: var(--muted); margin-bottom: 22px; flex: 1; }
+.path-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.path-card p { color: var(--muted); font-size: 15px; margin-bottom: 16px; flex: 1; }
+.path-card .link-arrow { font-size: 15px; }
 
 /* Spot image (or Illustration.jsx drawing) in place of an icon. */
-.path-art { height: 160px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
+.path-art { height: 112px; margin-bottom: 16px; display: flex; justify-content: center; align-items: center; }
 .path-art svg, .path-art img { height: 100%; width: auto; max-width: 100%; object-fit: contain; display: block; }
+
+/* Phones: compact horizontal card — small art on the left, text on the right. */
+@media (max-width: 760px) {
+  .path-card { display: grid; grid-template-columns: 84px 1fr; grid-template-rows: auto 1fr auto; column-gap: 16px; padding: 16px; }
+  .path-art { grid-row: 1 / -1; height: 84px; margin: 0; align-self: center; }
+  .path-card h3 { font-size: 17px; margin-bottom: 4px; }
+  .path-card p { font-size: 14px; margin-bottom: 8px; }
+  .path-card .link-arrow { font-size: 14px; }
+}

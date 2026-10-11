@@ -12,12 +12,13 @@
 /* Dots: 24px-tall hit area, 8px visual pill drawn with ::before.
    The active dot widens and ::after fills it as the countdown. */
 .slide-dots { display: flex; align-items: center; padding: 0 4px; }
-.slide-dot { position: relative; width: 16px; height: 24px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 999px; transition: width .3s ease; }
+/* 24px wide tap area minimum (WCAG 2.5.8); the visible pill is drawn inside. */
+.slide-dot { position: relative; width: 24px; height: 24px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 999px; transition: width .3s ease; }
 .slide-dot::before,
-.slide-dot.is-active::after { content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 8px; border-radius: 999px; }
+.slide-dot.is-active::after { content: ""; position: absolute; left: 8px; right: 8px; top: 8px; height: 8px; border-radius: 999px; }
 .slide-dot::before { background: rgba(255,255,255,.45); transition: background .2s; }
 .slide-dot:hover::before { background: rgba(255,255,255,.8); }
-.slide-dot.is-active { width: 36px; }
+.slide-dot.is-active { width: 44px; }
 .slide-dot.is-active::before { background: rgba(255,255,255,.35); }
 .slide-dot.is-active::after { background: #fff; transform-origin: left; }
 .slide-controls.is-playing .slide-dot.is-active::after { animation: slide-progress var(--slide-interval, 6s) linear both; }

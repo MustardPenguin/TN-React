@@ -43,6 +43,13 @@ src/
   (Hero, Verification); timing logic lives in `lib/` and is used through hooks.
 - Icons and illustrations are static SVG strings rendered by `<Svg>`; never pass user content
   to it.
+- Accessibility (ADA / WCAG 2.2 AA) is required for every feature, not a later pass:
+  real `<button>`/`<a>` elements (no buttons inside links — use a stretched link), an
+  `aria-label` on every icon-only control, full keyboard use with a visible focus ring,
+  tap targets at least 24×24px, text contrast at least 4.5:1, screen-reader text for
+  anything shown only visually (rings, dots, colours), `prefers-reduced-motion` respected and
+  no autoplay without a pause control. Check each change with axe-core (0 violations) plus a
+  keyboard walkthrough; screen-reader and zoom checks still need a person.
 - This is a mockup: UI is static unless a feature has been explicitly asked for.
   Current behaviour: hero slideshow + rotating headlines, typed search suggestions, the
   sliding page sheet over the pinned hero, and the expandable verification steps.
