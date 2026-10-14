@@ -4,7 +4,6 @@ import { formatPrice } from '../../lib/format.js';
 import { useSlideshow } from '../../hooks/useSlideshow.js';
 import { useMediaQuery } from '../../hooks/useMediaQuery.js';
 import { Icon } from './Icon.jsx';
-import { SlideControls } from './SlideControls.jsx';
 import './BuilderCard.css';
 
 const initials = (name) => name.split(' ').map((word) => word[0]).slice(0, 2).join('');
@@ -45,6 +44,15 @@ export function BuilderCard({ builder, active = false, interval = 15000 }) {
   const swipeX = useRef(null);
   const titleId = `builder-${builder.id}`;
 
+  // Restart the progress fill only when the timer restarts: a new slide, or
+  // the countdown resuming (play pressed, or this card coming into focus).
+  // Pausing or leaving focus just freezes the fill where it is.
+  const fillKey = useRef(0);
+  const last = useRef({ index, running: false });
+  const running = slideshow.playing && active;
+  if (last.current.index !== index || (running && !last.current.running)) fillKey.current += 1;
+  last.current = { index, running };
+
   // Load the current photo and the next one, so changes cross-fade.
   const upcoming = (index + 1) % count;
   if (!loaded.has(index) || !loaded.has(upcoming)) setLoaded(new Set([...loaded, index, upcoming]));
@@ -57,7 +65,7 @@ export function BuilderCard({ builder, active = false, interval = 15000 }) {
   ].filter(Boolean);
 
   return (
-    <article className={cx('builder-card', active && 'is-active')} aria-labelledby={titleId} style={{ '--slide-interval': `${interval}ms` }}>
+    <article className={cx('builder-card', active && 'is-active', !slideshow.playing && 'is-paused')} aria-labelledby={titleId} style={{ '--slide-interval': `${interval}ms` }}>
       <div
         className="bc-media"
         onPointerDown={(e) => { if (e.pointerType === 'touch') swipeX.current = e.clientX; }}
@@ -80,19 +88,34 @@ export function BuilderCard({ builder, active = false, interval = 15000 }) {
           ))}
         </div>
         {count > 1 && (
-          <div className="bc-controls">
-            <SlideControls
-              count={count}
-              index={index}
-              playing={slideshow.playing}
-              restartKey={slideshow.restartKey}
-              label={`Projects by ${name}`}
-              noun="project"
-              onPrev={slideshow.prev}
-              onNext={slideshow.next}
-              onGo={slideshow.go}
-              onToggle={slideshow.toggle}
-            />
+          <div className="bc-controls" role="group" aria-label={`Projects by ${name}`}>
+            {/* Progress: one segment per project. Done = solid, current fills
+                over the interval (remounted via fillKey to restart), upcoming
+                = faint. Each is a button (24px tap area). */}
+            <div className="bc-progress">
+              {projects.map((project, i) => (
+                <button
+                  key={project.name}
+                  type="button"
+                  className={cx('bc-seg', i < index && 'is-done', i === index && 'is-current')}
+                  aria-label={`Show project ${i + 1} of ${count}: ${project.name}`}
+                  aria-current={i === index ? 'true' : undefined}
+                  onClick={() => slideshow.go(i)}
+                >
+                  {i === index && <span key={fillKey.current} className="bc-seg-fill" />}
+                </button>
+              ))}
+            </div>
+            <button type="button" className="bc-pause" aria-label={`${slideshow.playing ? 'Pause' : 'Play'} slideshow`} onClick={slideshow.toggle}>
+              <Icon name={slideshow.playing ? 'pause' : 'play'} />
+            </button>
+            {/* Desktop: arrows appear while hovering the photo (or on focus). */}
+            <button type="button" className="bc-arrow prev" aria-label="Previous project" onClick={slideshow.prev}><Icon name="chevronLeft" /></button>
+            <button type="button" className="bc-arrow next" aria-label="Next project" onClick={slideshow.next}><Icon name="chevronRight" /></button>
+            {/* Announced only while paused, so autoplay doesn't talk over the page. */}
+            <span className="sr-only" aria-live={slideshow.playing ? 'off' : 'polite'} aria-atomic="true">
+              {`Showing project ${index + 1} of ${count}: ${projects[index].name}`}
+            </span>
           </div>
         )}
       </div>

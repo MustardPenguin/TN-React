@@ -10,17 +10,39 @@
 .bc-photo { position: absolute; inset: 0; background: var(--brand-light); overflow: hidden; }
 .bc-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s ease; }
 .bc-photo img.is-active { opacity: 1; }
-.bc-photo::after { content: ""; position: absolute; inset: auto 0 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,.4)); pointer-events: none; }
+/* Soft shade at the top so the white progress line and pause button read on
+   bright photos. */
+.bc-photo::after { content: ""; position: absolute; inset: 0 0 auto; height: 30%; background: linear-gradient(rgba(0,0,0,.38), transparent); pointer-events: none; }
 
-/* Slideshow controls (shared SlideControls), compact, at the bottom. */
-.bc-controls { position: absolute; z-index: 2; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; }
-/* No backdrop blur here: repainting a blur in every card while hovering or
-   scrolling the carousel made cards flash and blank out. A darker solid
-   background reads the same over the photo. */
-.bc-controls .slide-controls { padding: 2px; backdrop-filter: none; background: rgba(15,21,32,.62); }
-.bc-controls .slide-count { min-width: 38px; font-size: 12px; }
-/* Only the card in focus counts down; others hold their place. */
-.builder-card:not(.is-active) .slide-dot.is-active::after { animation-play-state: paused; }
+/* ---------- Slideshow controls: progress line, pause, hover arrows ----------
+   No backdrop blur anywhere here: repainting blurs in every card while
+   hovering or scrolling the carousel made cards flash and blank out. */
+.bc-controls { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.bc-controls button { pointer-events: auto; }
+
+/* Segments along the top edge; each is a 24px-tall button around a 3px line. */
+.bc-progress { position: absolute; top: 4px; left: 10px; right: 52px; display: flex; gap: 4px; }
+.bc-seg { position: relative; flex: 1; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; }
+.bc-seg::before { content: ""; position: absolute; left: 0; right: 0; top: 10px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.4); transition: background .2s; }
+.bc-seg:hover::before { background: rgba(255,255,255,.7); }
+.bc-seg.is-done::before { background: #fff; }
+.bc-seg-fill { position: absolute; left: 0; right: 0; top: 10px; height: 3px; border-radius: 3px; background: #fff; transform-origin: left; animation: bc-fill var(--slide-interval, 15s) linear both; }
+@keyframes bc-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Held (not the focused card, or paused): the fill stops where it is. */
+.builder-card:not(.is-active) .bc-seg-fill,
+.builder-card.is-paused .bc-seg-fill { animation-play-state: paused; }
+.bc-seg:focus-visible { outline: 2px solid #fff; outline-offset: -4px; border-radius: 4px; }
+
+.bc-pause { position: absolute; top: 6px; right: 8px; display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(15,21,32,.55); color: #fff; cursor: pointer; transition: background .2s; }
+.bc-pause:hover { background: rgba(15,21,32,.8); }
+.bc-pause svg { width: 14px; height: 14px; }
+
+.bc-arrow { position: absolute; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--text); cursor: pointer; opacity: 0; transition: opacity .2s; }
+.bc-arrow svg { width: 16px; height: 16px; }
+.bc-arrow.prev { left: 10px; }
+.bc-arrow.next { right: 10px; }
+.bc-media:hover .bc-arrow, .bc-arrow:focus-visible { opacity: 1; }
+.bc-pause:focus-visible, .bc-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
 /* ---------- Body ---------- */
 .bc-body { min-width: 0; display: flex; flex-direction: column; padding: 18px 20px; }
@@ -75,6 +97,11 @@
   .bc-meta dd { font-size: 14px; white-space: normal; }
   .bc-actions .bc-btn { flex: 1; justify-content: center; padding-inline: 12px; }
 }
+/* Touch screens swipe instead of using arrows. */
+@media (hover: none) {
+  .bc-arrow { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .builder-card, .bc-photo img, .bc-project-item, .bc-btn, .bc-btn-primary svg { transition: none; }
+  .builder-card, .bc-photo img, .bc-project-item, .bc-btn, .bc-btn-primary svg, .bc-seg::before, .bc-pause, .bc-arrow { transition: none; }
+  .bc-seg-fill { animation: none; } /* current segment shows solid */
 }
