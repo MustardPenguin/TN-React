@@ -35,5 +35,8 @@ h2 { font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: -.02em
    section comes first without breaking sticky positioning inside. */
 .page-sheet { position: relative; z-index: 1; margin-top: calc(-1 * var(--sheet-overlap)); background: var(--bg); border-radius: var(--sheet-overlap) var(--sheet-overlap) 0 0; overflow: clip; box-shadow: 0 -14px 40px rgba(10,25,35,.22); }
 
+/* Placeholder while a lazily loaded page downloads (keeps the footer down). */
+.page-loading { min-height: 100vh; }
+
 /* Visually hidden but still read by screen readers. */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

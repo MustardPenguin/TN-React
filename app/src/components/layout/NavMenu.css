@@ -1,0 +1,71 @@
+/* Panels are positioned within the header container (.nav is relative). */
+.nm-list { list-style: none; display: flex; gap: 6px; }
+.nm-item { display: flex; }
+
+.nm-trigger { position: relative; display: inline-flex; align-items: center; gap: 4px; height: 40px; padding: 0 12px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 15px; font-weight: 500; color: inherit; cursor: pointer; transition: background .2s, color .2s; }
+.nm-trigger svg { width: 14px; height: 14px; color: var(--muted); transition: transform .2s; }
+/* Darker green on the pale highlight for 4.5:1 text contrast. */
+.nm-trigger:hover, .nm-item.is-open .nm-trigger { background: var(--brand-light); color: #1f5a40; }
+.nm-item.is-open .nm-trigger svg { transform: rotate(180deg); color: #1f5a40; }
+.nm-trigger:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* ---------- Panel ---------- */
+.nm-panel { position: absolute; top: calc(100% + 8px); z-index: 60; width: min(820px, calc(100% - 32px)); border: 1px solid var(--border); border-radius: 20px; background: #fff; box-shadow: 0 24px 60px rgba(16,24,40,.16), 0 2px 8px rgba(16,24,40,.06); overflow: hidden; transform-origin: top center; animation: nm-in .18s ease-out; }
+.nm-panel[hidden] { display: none; }
+.nm-panel.is-cards { width: min(680px, calc(100% - 32px)); }
+/* Invisible bridge over the gap, so moving the mouse down doesn't leave it. */
+.nm-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+@keyframes nm-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+.nm-body { display: grid; grid-template-columns: 1fr 230px; gap: 24px; padding: 22px; }
+.nm-cols { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 20px; }
+.nm-col-title { margin: 0 0 8px 10px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.nm-col ul { list-style: none; display: grid; gap: 2px; }
+.nm-link { display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 6px 10px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text); transition: background .15s, color .15s; }
+.nm-link:hover { background: var(--bg-soft); color: var(--brand); }
+.nm-link:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.nm-link-icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--brand-light); color: var(--brand); flex-shrink: 0; transition: background .15s, color .15s; }
+.nm-link-icon svg { width: 17px; height: 17px; }
+.nm-link:hover .nm-link-icon { background: var(--brand); color: #fff; }
+
+/* Audience cards (List menu). */
+.nm-cards { list-style: none; display: grid; gap: 8px; }
+.nm-card { display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 14px; transition: border-color .2s, background .2s, box-shadow .2s; }
+.nm-card:hover { border-color: var(--brand); background: #fbfdfc; box-shadow: 0 6px 18px rgba(47,125,90,.12); }
+.nm-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.nm-card-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand-light); color: var(--brand); flex-shrink: 0; transition: background .2s, color .2s; }
+.nm-card-icon svg { width: 22px; height: 22px; }
+.nm-card:hover .nm-card-icon { background: var(--brand); color: #fff; }
+.nm-card-text { flex: 1; min-width: 0; display: grid; }
+.nm-card-text b { font-size: 15px; font-weight: 700; color: var(--text); }
+.nm-card-text span { font-size: 13px; color: var(--muted); }
+.nm-card-arrow { display: grid; color: var(--muted); transition: transform .2s, color .2s; }
+.nm-card-arrow svg { width: 16px; height: 16px; }
+.nm-card:hover .nm-card-arrow { transform: translateX(3px); color: var(--brand); }
+
+/* Highlighted card on the right. */
+.nm-promo { display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 16px; background: linear-gradient(150deg, #1f5a40, #2F7D5A); color: #fff; }
+.nm-promo-icon { display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 6px; border-radius: 11px; background: rgba(255,255,255,.16); }
+.nm-promo-icon svg { width: 20px; height: 20px; }
+.nm-promo b { font-size: 16px; line-height: 1.3; }
+.nm-promo p { font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.85); }
+.nm-promo a { margin-top: auto; padding-top: 8px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.nm-promo a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 4px; }
+
+.nm-footer { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 14px 22px; border-top: 1px solid var(--border); background: var(--bg-soft); }
+.nm-footer a { font-size: 14px; font-weight: 600; color: var(--brand); }
+.nm-footer a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.nm-footer a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+
+/* Narrower desktops: promo moves under the links. */
+@media (max-width: 1180px) {
+  .nm-body { grid-template-columns: 1fr; }
+  .nm-promo { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 12px; }
+  .nm-promo-icon { margin-bottom: 0; }
+  .nm-promo p { flex-basis: 100%; }
+  .nm-promo a { margin-top: 0; padding-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nm-panel { animation: none; }
+  .nm-trigger, .nm-trigger svg, .nm-link, .nm-link-icon, .nm-card, .nm-card-icon, .nm-card-arrow { transition: none; }
+}

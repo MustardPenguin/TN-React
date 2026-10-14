@@ -1,0 +1,35 @@
+.price-panel { display: grid; gap: 18px; padding: 24px; border: 1px solid var(--border); border-radius: 20px; background: #fff; box-shadow: 0 12px 40px rgba(16,24,40,.08); }
+
+.pp-price { display: grid; gap: 2px; }
+.pp-amount { font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+.pp-amount small { font-size: 16px; font-weight: 500; color: var(--muted); }
+.pp-sub { font-size: 14px; color: var(--muted); }
+
+/* Verification status: links to the report on the page. */
+.pp-verify { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: 0; border-radius: 14px; background: var(--brand-light); font: inherit; color: inherit; text-align: left; cursor: pointer; transition: background .2s; }
+.pp-verify.is-partial { background: #fff7ed; }
+.pp-verify:hover { background: #dcebe3; }
+.pp-verify.is-partial:hover { background: #ffedd5; }
+.pp-verify:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.pp-verify .mini-ring { width: 36px; height: 36px; }
+.pp-verify b { display: block; font-size: 15px; color: #1f5a40; }
+.pp-verify.is-partial b { color: #9a3412; }
+.pp-verify span span { font-size: 13px; color: var(--muted); }
+
+.pp-actions { display: grid; gap: 10px; }
+.pp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 18px; border: 0; border-radius: 999px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: background .2s, box-shadow .2s, transform .2s; }
+.pp-btn svg { width: 18px; height: 18px; }
+.pp-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.pp-btn-primary { background: var(--brand); color: #fff; box-shadow: 0 6px 16px rgba(47,125,90,.3); }
+.pp-btn-primary:hover { background: #276b4c; transform: translateY(-1px); }
+.pp-btn-soft { background: #e8f1ec; color: #1f5a40; }
+.pp-btn-soft:hover { background: #d6e8de; }
+
+.pp-lister { display: flex; gap: 12px; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); }
+.pp-avatar { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #1d3b53; color: #fff; font-weight: 800; font-size: 15px; }
+.pp-lister b { display: block; font-size: 15px; }
+.pp-lister span span { display: block; font-size: 13px; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-btn, .pp-verify { transition: none; }
+}

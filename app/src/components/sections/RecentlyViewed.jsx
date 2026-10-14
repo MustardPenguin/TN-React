@@ -6,7 +6,8 @@ import './RecentlyViewed.css';
 // [{ listing, viewed }] (`viewed` is display text, e.g. "2 hours ago").
 // Renders nothing without history (e.g. first-time visitors).
 // `checkSteps` is the verification steps, for the "n of 5" total.
-export function RecentlyViewed({ items, checkSteps = [] }) {
+// `hrefFor(id)` builds each card's link to its listing page.
+export function RecentlyViewed({ items, checkSteps = [], hrefFor = () => '#' }) {
   if (!items?.length) return null;
   return (
     <section className="recent" aria-labelledby="recent-title">
@@ -17,7 +18,7 @@ export function RecentlyViewed({ items, checkSteps = [] }) {
         </div>
         <div className="recent-row">
           {items.map(({ listing, viewed }) => (
-            <RecentListingCard key={listing.id} listing={listing} viewed={viewed} checkTotal={checkSteps.length} />
+            <RecentListingCard key={listing.id} listing={listing} viewed={viewed} checkTotal={checkSteps.length} href={hrefFor(listing.id)} />
           ))}
         </div>
       </div>

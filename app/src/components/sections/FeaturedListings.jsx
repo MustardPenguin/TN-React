@@ -3,7 +3,8 @@ import { SectionHead } from '../ui/SectionHead.jsx';
 import { ListingCard } from '../ui/ListingCard.jsx';
 import './FeaturedListings.css';
 
-export function FeaturedListings({ listings, filters, activeFilter = filters[0], location, checkSteps }) {
+// `hrefFor(id)` builds each card's link to its listing page.
+export function FeaturedListings({ listings, filters, activeFilter = filters[0], location, checkSteps, hrefFor = () => '#' }) {
   return (
     <section className="listings">
       <div className="container">
@@ -17,7 +18,7 @@ export function FeaturedListings({ listings, filters, activeFilter = filters[0],
           {filters.map((f) => <span key={f} className={cx('chip', f === activeFilter && 'active')}>{f}</span>)}
         </div>
         <div className="carousel">
-          {listings.map((listing) => <ListingCard key={listing.id} listing={listing} checkSteps={checkSteps} />)}
+          {listings.map((listing) => <ListingCard key={listing.id} listing={listing} checkSteps={checkSteps} href={hrefFor(listing.id)} />)}
         </div>
       </div>
     </section>

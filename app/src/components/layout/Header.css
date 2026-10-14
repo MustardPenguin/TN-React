@@ -3,9 +3,9 @@
 header { position: sticky; top: 0; z-index: 50; color: var(--text); background: rgba(255,255,255,.82); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid rgba(228,231,236,.75);
   transition: background-color .3s, border-color .3s, color .3s; }
 /* Logo + main links on the left; icon links and CTA pushed to the right. */
-.nav { display: flex; align-items: center; height: 60px; gap: 24px; }
-.nav-links { display: flex; gap: 28px; margin-left: 16px; font-weight: 500; font-size: 15px; }
-.nav-links a:hover { color: var(--brand); }
+/* Relative: the main-nav dropdown panels (NavMenu.css) position within it. */
+.nav { position: relative; display: flex; align-items: center; height: 60px; gap: 24px; }
+.nav-links { display: flex; margin-left: 8px; }
 .nav-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 
 /* Icon-only links (help, saved homes, sign in). */
@@ -14,7 +14,10 @@ header { position: sticky; top: 0; z-index: 50; color: var(--text); background: 
 .icon-link:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .icon-link svg { width: 22px; height: 22px; }
 .nav-actions .icon-link + .btn { margin-left: 4px; }
-.menu-btn { display: none; background: none; border: 0; color: inherit; }
+.menu-btn { display: none; place-items: center; width: 44px; height: 44px; margin-right: -8px; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; }
+.menu-btn:hover { background: var(--brand-light); }
+.menu-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.menu-btn svg { width: 24px; height: 24px; }
 
 /* ---------- While the hero is showing: solid white ---------- */
 header.is-over-hero { background: #fff; border-bottom-color: var(--border); }
@@ -24,7 +27,7 @@ header.is-over-hero { background: #fff; border-bottom-color: var(--border); }
 
 @media (max-width: 1024px) {
   .nav-links { display: none; }
-  .menu-btn { display: block; }
+  .menu-btn { display: grid; }
 }
 @media (max-width: 760px) {
   .nav-actions .btn { display: none; }

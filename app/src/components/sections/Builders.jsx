@@ -4,26 +4,56 @@ import { Icon } from '../ui/Icon.jsx';
 import { BuilderCard } from '../ui/BuilderCard.jsx';
 import './Builders.css';
 
+// The card most fully visible in the rail (first one on a tie).
+function mostVisibleIndex(rail) {
+  const view = rail.getBoundingClientRect();
+  let best = 0;
+  let bestShown = -1;
+  [...rail.children].forEach((item, i) => {
+    const r = item.getBoundingClientRect();
+    const shown = (Math.min(r.right, view.right) - Math.max(r.left, view.left)) / r.width;
+    if (shown > bestShown + 0.01) { best = i; bestShown = shown; }
+  });
+  return best;
+}
+
 // Builder showcase: one carousel of builder cards. Swipe/scroll on any
 // device; arrow buttons (desktop) move one card and disable at the ends.
-export function Builders({ intro, builders }) {
+// Only the card in focus (most visible, while the section is on screen)
+// auto-rotates through its projects every `interval` ms.
+export function Builders({ intro, builders, interval }) {
+  const section = useRef(null);
   const rail = useRef(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [focused, setFocused] = useState(0);
+  const [onScreen, setOnScreen] = useState(false);
 
   useEffect(() => {
     const el = rail.current;
+    let frame = 0;
     const update = () => {
+      frame = 0;
       setAtStart(el.scrollLeft < 4);
       setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+      setFocused(mostVisibleIndex(el));
     };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
-    el.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    el.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
     return () => {
-      el.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      cancelAnimationFrame(frame);
+      el.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
     };
+  }, []);
+
+  // Rotate only while at least a third of the section is on screen.
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0.33 });
+    observer.observe(section.current);
+    return () => observer.disconnect();
   }, []);
 
   const scrollByCard = (direction) => {
@@ -34,7 +64,7 @@ export function Builders({ intro, builders }) {
 
   if (builders.length === 0) return null;
   return (
-    <section className="builders" aria-labelledby="builders-title">
+    <section className="builders" ref={section} aria-labelledby="builders-title">
       <div className="container">
         <div className="section-head">
           <div>
@@ -51,7 +81,9 @@ export function Builders({ intro, builders }) {
         {/* Edge fades: overlays on this wrapper, shown only on sides with more to scroll. */}
         <div className={cx('builders-fade', !atStart && 'fade-start', !atEnd && 'fade-end')}>
           <ul className="builders-rail" id="builders-rail" ref={rail} aria-label="Builders">
-            {builders.map((builder) => <li key={builder.id}><BuilderCard builder={builder} /></li>)}
+            {builders.map((builder, i) => (
+              <li key={builder.id}><BuilderCard builder={builder} active={onScreen && i === focused} interval={interval} /></li>
+            ))}
           </ul>
         </div>
       </div>

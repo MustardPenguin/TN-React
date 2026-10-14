@@ -1,0 +1,63 @@
+/* Full-height panel from the right; the native ::backdrop dims the page. */
+.mobile-menu { position: fixed; inset: 0 0 0 auto; width: min(420px, 100vw); height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #fff; color: var(--text); overflow-y: auto; overscroll-behavior: contain; box-shadow: -16px 0 48px rgba(16,24,40,.2); }
+.mobile-menu[open] { display: flex; flex-direction: column; animation: mm-in .25s ease-out; }
+.mobile-menu::backdrop { background: rgba(10,14,20,.45); animation: mm-fade .25s ease-out; }
+@keyframes mm-in { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes mm-fade { from { opacity: 0; } to { opacity: 1; } }
+/* Don't let the page behind scroll while the menu is open. */
+html:has(.mobile-menu[open]) { overflow: hidden; }
+
+.mm-top { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; height: var(--header-h); padding: 0 16px; background: #fff; border-bottom: 1px solid var(--border); }
+.mobile-menu .logo-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; } /* header hides it on phones */
+.mm-close { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--bg-soft); color: var(--text); cursor: pointer; }
+.mm-close svg { width: 20px; height: 20px; }
+.mm-close:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* ---------- Sections (Buy / Rent / List) ---------- */
+.mm-nav > ul { list-style: none; }
+.mm-section { border-bottom: 1px solid var(--border); }
+.mm-section-head { font-size: inherit; font-weight: inherit; }
+.mm-section-head button { width: 100%; display: flex; justify-content: space-between; align-items: center; min-height: 56px; padding: 0 20px; border: 0; background: none; font: inherit; font-size: 18px; font-weight: 700; color: var(--text); cursor: pointer; }
+.mm-section-head svg { width: 18px; height: 18px; color: var(--muted); transition: transform .2s; }
+.mm-section.is-open .mm-section-head svg { transform: rotate(180deg); color: var(--brand); }
+.mm-section-head button:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.mm-section-body { padding: 0 20px 18px; display: grid; gap: 16px; }
+.mm-section-body[hidden] { display: none; } /* display: grid would otherwise override [hidden] */
+
+.mm-group-title { margin-bottom: 6px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mm-links { list-style: none; display: grid; gap: 2px; }
+.mm-link { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 6px 8px; border-radius: 10px; font-size: 15px; font-weight: 500; }
+.mm-link:hover { background: var(--bg-soft); }
+.mm-link:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+/* Lists without icons (budgets, areas) wrap as chips to save height. */
+.mm-links.is-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.mm-links.is-chips .mm-link { min-height: 40px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px; font-size: 14px; }
+
+.mm-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--brand-light); color: var(--brand); flex-shrink: 0; }
+.mm-icon svg { width: 20px; height: 20px; }
+.mm-icon.is-small { width: 32px; height: 32px; border-radius: 9px; }
+.mm-icon.is-small svg { width: 17px; height: 17px; }
+
+.mm-cards { list-style: none; display: grid; gap: 8px; }
+.mm-card { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 14px; }
+.mm-card:hover { border-color: var(--brand); }
+.mm-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.mm-card-text { display: grid; }
+.mm-card-text b { font-size: 15px; }
+.mm-card-text span { font-size: 13px; color: var(--muted); }
+
+.mm-footer-links { display: grid; gap: 10px; }
+.mm-footer-links a { font-size: 14px; font-weight: 600; color: #1f5a40; }
+.mm-footer-links a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- Help / Saved / Sign in ---------- */
+.mm-account { list-style: none; display: grid; gap: 4px; padding: 16px 12px 24px; margin-top: auto; }
+.mm-account-link { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 8px; border-radius: 12px; font-size: 16px; font-weight: 600; }
+.mm-account-link .mm-icon { background: var(--bg-soft); color: var(--text); }
+.mm-account-link:hover { background: var(--bg-soft); }
+.mm-account-link:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu[open], .mobile-menu::backdrop { animation: none; }
+  .mm-section-head svg { transition: none; }
+}

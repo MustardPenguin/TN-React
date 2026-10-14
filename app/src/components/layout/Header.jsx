@@ -1,8 +1,10 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { cx } from '../../lib/cx.js';
 import { Logo } from '../ui/Logo.jsx';
 import { Icon } from '../ui/Icon.jsx';
 import { CityPicker } from '../ui/CityPicker.jsx';
+import { NavMenus } from './NavMenu.jsx';
+import { MobileMenu } from './MobileMenu.jsx';
 import './Header.css';
 
 // True while the element matching `selector` (e.g. the page sheet below the
@@ -20,7 +22,8 @@ function useOverHero(headerRef, selector) {
       frame = 0;
       const below = document.querySelector(selector);
       const header = headerRef.current;
-      if (!below || !header) return;
+      if (!header) return;
+      if (!below) { setOver(false); return; }
       setOver(below.getBoundingClientRect().top > header.offsetHeight);
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
@@ -43,22 +46,27 @@ function useOverHero(headerRef, selector) {
 // hero with white content; after that it's frosted glass with dark content.
 export function Header({ links, iconLinks = [], cities = [], onCityChange, transparentUntil }) {
   const ref = useRef(null);
+  const navRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
   const overHero = useOverHero(ref, transparentUntil);
   return (
+    <>
     <header ref={ref} className={cx('site-header', overHero && 'is-over-hero')}>
-      <div className="container nav">
+      <div className="container nav" ref={navRef}>
         <Logo />
         {cities.length > 0 && <CityPicker cities={cities} onChange={onCityChange} />}
-        <nav className="nav-links">
-          {links.map((link) => <a key={link.label} href={link.href}>{link.label}</a>)}
-        </nav>
+        <NavMenus items={links} bounds={navRef} />
         <div className="nav-actions">
           {iconLinks.map((link) => (
             <a key={link.label} href={link.href} className="icon-link" aria-label={link.label} title={link.label}><Icon name={link.icon} /></a>
           ))}
-          <button className="menu-btn" aria-label="Menu"><Icon name="menu" /></button>
+          <button type="button" className="menu-btn" aria-label="Menu" aria-haspopup="dialog" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}><Icon name="menu" /></button>
         </div>
       </div>
     </header>
+    {/* Outside <header>, so the header's phone styles don't apply inside it. */}
+    <MobileMenu open={menuOpen} onClose={closeMenu} links={links} iconLinks={iconLinks} />
+    </>
   );
 }

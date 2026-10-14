@@ -15,8 +15,7 @@
   padding: 96px 0 calc(96px + var(--sheet-overlap));
   min-height: 560px; min-height: calc(100svh - var(--header-h) - 5svh + var(--sheet-overlap));
   background: linear-gradient(135deg, #0e7c7b, #1d3b53);
-  /* White frame on the left and right; the slides sit inside it. */
-  border-inline: 4px solid #fff; }
+}
 
 /* Slideshow: stacked image layers under a dark overlay for text contrast. */
 .hero-slides { position: absolute; inset: 0; z-index: -1; }
