@@ -1,3 +1,6 @@
+/* Section spacing (see base.css). */
+.list-property { --pad-top: 8px; --pad-bottom: 40px; --pad-top-phone: 8px; --pad-bottom-phone: 40px; }
+
 .owners-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 
 .steps { margin: 28px 0 32px; display: grid; gap: 20px; }

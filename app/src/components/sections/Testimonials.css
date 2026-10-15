@@ -1,3 +1,6 @@
+/* Section spacing (see base.css). */
+.testimonials { --pad-top: 24px; --pad-bottom: 32px; --pad-top-phone: 12px; --pad-bottom-phone: 24px; }
+
 .testimonials { background: var(--bg-soft); }
 .t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 

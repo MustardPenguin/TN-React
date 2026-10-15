@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { cx } from '../../lib/cx.js';
 import { Icon } from '../ui/Icon.jsx';
 import { BuilderCard } from '../ui/BuilderCard.jsx';
 import './Builders.css';
@@ -17,8 +16,9 @@ function mostVisibleIndex(rail) {
   return best;
 }
 
-// Builder showcase: one carousel of builder cards. Swipe/scroll on any
-// device; arrow buttons (desktop) move one card and disable at the ends.
+// Builder showcase: one builder card per view, full content width. Swipe or
+// scroll on any device; the arrow buttons move one card and disable at the
+// ends, with a "2 / 4" counter beside them.
 // Only the card in focus (most visible, while the section is on screen)
 // auto-rotates through its projects every `interval` ms.
 export function Builders({ intro, builders, interval }) {
@@ -74,18 +74,17 @@ export function Builders({ intro, builders, interval }) {
           </div>
           <div className="builders-nav">
             {intro.link && <a href={intro.link.href} className="link-arrow">{intro.link.label} →</a>}
-            <button type="button" className="builders-arrow" aria-label="Previous builders" aria-controls="builders-rail" disabled={atStart} onClick={() => scrollByCard(-1)}><Icon name="chevronLeft" /></button>
-            <button type="button" className="builders-arrow" aria-label="Next builders" aria-controls="builders-rail" disabled={atEnd} onClick={() => scrollByCard(1)}><Icon name="chevronRight" /></button>
+            <span className="builders-count" aria-hidden="true">{focused + 1} / {builders.length}</span>
+            <button type="button" className="builders-arrow" aria-label="Previous builder" aria-controls="builders-rail" disabled={atStart} onClick={() => scrollByCard(-1)}><Icon name="chevronLeft" /></button>
+            <button type="button" className="builders-arrow" aria-label="Next builder" aria-controls="builders-rail" disabled={atEnd} onClick={() => scrollByCard(1)}><Icon name="chevronRight" /></button>
           </div>
         </div>
-        {/* Edge fades: overlays on this wrapper, shown only on sides with more to scroll. */}
-        <div className={cx('builders-fade', !atStart && 'fade-start', !atEnd && 'fade-end')}>
-          <ul className="builders-rail" id="builders-rail" ref={rail} aria-label="Builders">
-            {builders.map((builder, i) => (
-              <li key={builder.id}><BuilderCard builder={builder} active={onScreen && i === focused} interval={interval} /></li>
-            ))}
-          </ul>
-        </div>
+        {/* One builder per view: each card spans the full content width. */}
+        <ul className="builders-rail" id="builders-rail" ref={rail} aria-label="Builders">
+          {builders.map((builder, i) => (
+            <li key={builder.id}><BuilderCard builder={builder} active={onScreen && i === focused} interval={interval} /></li>
+          ))}
+        </ul>
       </div>
     </section>
   );

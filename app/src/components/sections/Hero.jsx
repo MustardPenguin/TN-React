@@ -101,7 +101,8 @@ function HeroSearch({ suggestions }) {
           setHasValue(event.target.value !== '');
         }}
       />
-      <button className="btn btn-primary"><span>Search</span>
+      {/* aria-label: on phones the visible "Search" text is hidden. */}
+      <button className="btn btn-primary" aria-label="Search"><span>Search</span>
         <Icon name="arrowRight" />
       </button>
     </form>

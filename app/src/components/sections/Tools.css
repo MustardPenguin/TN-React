@@ -1,3 +1,6 @@
+/* Section spacing (see base.css). */
+.tools { --pad-top: 30px; --pad-bottom: 12px; --pad-top-phone: 24px; --pad-bottom-phone: 12px; }
+
 .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
 /* Hover/focus: lift, green border, an accent bar grows across the top, the

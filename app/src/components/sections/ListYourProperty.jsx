@@ -36,7 +36,7 @@ function ListingFormMock() {
 
 export function ListYourProperty({ steps }) {
   return (
-    <section>
+    <section className="list-property">
       <div className="container owners-grid">
         <div>
           <div className="eyebrow">For sellers and builders</div>

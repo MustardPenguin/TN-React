@@ -4,7 +4,7 @@ import './Cities.css';
 
 export function Cities({ cities }) {
   return (
-    <section>
+    <section className="cities">
       <div className="container">
         <SectionHead eyebrow="Explore" title="Browse homes by area" link={{ label: 'All areas', href: '#' }} />
         <div className="city-grid">

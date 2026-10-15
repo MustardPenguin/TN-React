@@ -1,3 +1,6 @@
+/* Section spacing (see base.css). */
+.builders { --pad-top: 18px; --pad-bottom: 24px; --pad-top-phone: 18px; --pad-bottom-phone: 24px; }
+
 .builders .section-head { margin-bottom: 24px; }
 .builders-nav { display: flex; align-items: center; gap: 12px; }
 .builders-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: #fff; color: var(--text); display: grid; place-items: center; cursor: pointer; transition: border-color .2s, color .2s, opacity .2s; }
@@ -6,36 +9,22 @@
 .builders-arrow:disabled { opacity: .35; cursor: default; }
 .builders-arrow:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
-/* Wide horizontal cards: ~1.5 on desktop so the next one peeks in.
-   Scroll-area padding so the hover lift and outline aren't clipped (same
-   trick as the listings). */
-.builders-rail { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 24px) / 1.5); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scroll-padding-inline: 16px; margin: -16px; padding: 16px; scrollbar-width: none; }
+.builders-count { min-width: 44px; text-align: center; font-size: 14px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* One card per view, spanning the full content width. Scroll-area padding so
+   the hover lift and outline aren't clipped (same trick as the listings);
+   the 32px gap keeps the neighbouring card's shadow out of view. */
+.builders-rail { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: 100%; gap: 32px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scroll-padding-inline: 16px; margin: -16px; padding: 16px; scrollbar-width: none; }
 .builders-rail::-webkit-scrollbar { display: none; }
-/* Edge fades: a card leaving view fades into the background instead of being
-   sliced off. Gradient overlays in the section's background colour (white),
-   rather than a CSS mask, which repaints unreliably over a scrolling list.
-   Each side only shows while there's more to scroll that way (classes set in
-   Builders.jsx), so the first/last card shows fully at either end.
-   The wrapper matches the rail's scroll-area overhang so the fades sit at the
-   rail's visible edges. Overlays ignore the pointer, so cards stay clickable. */
-.builders-fade { --fade-bg: #fff; --fade-start: 72px; --fade-end: 120px; position: relative; margin: -16px; padding: 16px 0; }
-.builders-fade .builders-rail { margin: -16px 0; }
-.builders-fade::before, .builders-fade::after { content: ""; position: absolute; z-index: 2; top: 0; bottom: 0; pointer-events: none; opacity: 0; transition: opacity .3s; }
-.builders-fade::before { left: 0; width: var(--fade-start); background: linear-gradient(to right, var(--fade-bg), transparent); }
-.builders-fade::after { right: 0; width: var(--fade-end); background: linear-gradient(to left, var(--fade-bg), transparent); }
-.builders-fade.fade-start::before, .builders-fade.fade-end::after { opacity: 1; }
 .builders-rail > li { display: flex; }
 .builders-rail .builder-card { flex: 1; }
 
-@media (max-width: 1024px) {
-  .builders-rail { grid-auto-columns: calc((100% - 24px) / 1.15); }
-}
 @media (max-width: 760px) {
-  .builders-rail { grid-auto-columns: 88%; gap: 14px; }
-  .builders-fade { --fade-start: 28px; --fade-end: 40px; }
-  .builders-arrow { display: none; }
+  .builders-nav { gap: 6px; }
+  .builders-nav .link-arrow { margin-right: auto; }
+  .builders .section-head > .builders-nav { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .builders-rail { scroll-behavior: auto; }
-  .builders-arrow, .builders-fade::before, .builders-fade::after { transition: none; }
+  .builders-arrow { transition: none; }
 }

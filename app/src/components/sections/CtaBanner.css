@@ -1,4 +1,7 @@
-.cta { padding: 0 0 80px; background: var(--bg-soft); }
+/* Section spacing (see base.css). */
+.cta { --pad-top: 0px; --pad-bottom: 40px; --pad-top-phone: 0px; --pad-bottom-phone: 40px; }
+
+.cta { background: var(--bg-soft); }
 .cta-box { background: linear-gradient(120deg, var(--brand) 0%, #1d3b53 100%); border-radius: 22px; padding: 56px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
 .cta-box h2 { color: #fff; }
 .cta-box p { opacity: .88; margin-top: 8px; font-size: 17px; }

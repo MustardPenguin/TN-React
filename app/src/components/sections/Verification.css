@@ -1,3 +1,6 @@
+/* Section spacing (see base.css). */
+.verify { --pad-top: 18px; --pad-bottom: 24px; --pad-top-phone: 18px; --pad-bottom-phone: 24px; }
+
 /* The five verification steps: TrueNest's main selling point. */
 .verify { background: linear-gradient(180deg, var(--brand-light) 0%, #fff 85%); }
 /* Columns stretch to equal height; the panel centres its content. */

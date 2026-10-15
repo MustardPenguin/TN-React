@@ -1,6 +1,9 @@
 /* Continues the Featured listings band: same background, no top padding, a
    thin divider instead. */
-.recent { background: var(--bg-soft); padding-top: 0; }
+/* Section spacing (see base.css). */
+.recent { --pad-top: 0px; --pad-bottom: 24px; --pad-top-phone: 0px; --pad-bottom-phone: 24px; }
+
+.recent { background: var(--bg-soft); }
 .recent .container { padding-top: 28px; border-top: 1px solid var(--border); }
 @media (max-width: 760px) {
   .recent .container { border-top: 0; padding-top: 0; }

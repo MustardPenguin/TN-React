@@ -1,3 +1,6 @@
+/* Section spacing (see base.css). */
+.listings { --pad-top: 30px; --pad-bottom: 20px; --pad-top-phone: 8px; --pad-bottom-phone: 26px; }
+
 .listings { background: var(--bg-soft); }
 .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
 .chip { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: #fff; font-size: 14px; font-weight: 500; }

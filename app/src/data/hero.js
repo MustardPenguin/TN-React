@@ -35,7 +35,7 @@ export const heroHeadlines = [
   // },
   {
     title: ['Your roots are calling.', "We make sure it's safe to answer."],
-    sub: "NRI-grade verification on every property. Five pullars of trust, one score, zero guesswork. So when you're ready to come home - everything is ready for you.",
+    sub: "NRI-grade verification on every property. Five pillars of trust, one score, zero guesswork. So when you're ready to come home - everything is ready for you.",
   },
   {
     title: ['Elite, curated platform — we are not a listing aggregator; every builder and every property on TrueNest is selectively onboarded'],

@@ -1,9 +1,10 @@
-/* First section on the page sheet: just enough room below the sheet's
-   rounded top edge, and a tighter bottom so the listings follow closely. */
-.paths { padding: 36px 0 20px; }
+/* Section spacing (see base.css). First section on the page sheet: just
+   enough room below the sheet's rounded top edge, and a tighter bottom so
+   the listings follow closely. */
+.paths { --pad-top: 36px; --pad-bottom: 20px; --pad-top-phone: 24px; --pad-bottom-phone: 12px; }
+
 .path-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 @media (max-width: 760px) {
-  .paths { padding: 24px 0 12px; }
   .path-grid { grid-template-columns: 1fr; gap: 12px; }
 }
